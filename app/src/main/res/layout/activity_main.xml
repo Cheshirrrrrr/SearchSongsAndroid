@@ -25,7 +25,7 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="?"
+        android:text="sgdf"
         android:paddingTop="10dp"
         android:paddingBottom="10dp" />
 
@@ -43,13 +43,15 @@
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:onClick="onSingerClicked" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/button2"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:onClick="onSongClicked" />
     </LinearLayout>
 </RelativeLayout>
