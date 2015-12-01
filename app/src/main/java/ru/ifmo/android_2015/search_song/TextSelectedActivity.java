@@ -46,7 +46,7 @@ public class TextSelectedActivity extends AppCompatActivity{
 
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
-        return null;
+        return downloadTask;
     }
 
     @Override

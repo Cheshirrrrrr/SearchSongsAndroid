@@ -86,7 +86,7 @@ public class SongSelectedActivity extends AppCompatActivity implements SongSelec
         Intent text = new Intent(this, TextSelectedActivity.class);
 //        String str = album.title;
         text.putExtra(TextSelectedActivity.EXTRA_TEXT, song);
-//        text.putExtra(TextSelectedActivity.EXTRA_SINGER, str);
+//        text.putExtra(TextSelectedActivity.EXTRA_SINGER, );
         startActivity(text);
     }
 

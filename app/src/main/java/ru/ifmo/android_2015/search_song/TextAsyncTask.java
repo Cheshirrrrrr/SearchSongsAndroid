@@ -122,7 +122,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
     public static String[] amalgamaTranslations(String groupName) throws IOException, InterruptedException {
         groupName = amalgamaFormat(groupName, IGNORE_THE, "_");
         Thread.sleep(200);
-        Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/n/" + groupName + "/").get();
+        Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + groupName.charAt(0) +"/" + groupName + "/").get();
         Object listOfUl[] = html.body().getElementById("songs_nav").select("ul").toArray();
         Document translationList = Jsoup.parse(listOfUl[1].toString());
         Object listOfObjTranslations[] = translationList.select("li").select("li").toArray();
@@ -161,7 +161,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         artist = amalgamaFormat(artist, IGNORE_THE, "_");
         song = amalgamaFormat(song, NON_IGNORE_THE, "_");
 
-        Document html = Jsoup.connect("http://w...content-available-to-author-only...b.com/songs/n/" + artist + "/" + song + ".html").get();
+        Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + artist.charAt(0) +"/" + artist + "/" + song + ".html").get();
 
 //        printTextByClass(html, "original");
         Object text[] = html.getElementsByClass("original").toArray();

@@ -92,6 +92,7 @@ public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
             Log.w("SongAsyncTask", "We make array 4");
 
         } catch (Exception e) {
+            state = DownloadState.ERROR;
             Log.e(LOGTAG, e.getMessage());
             Log.w("SongAsyncTask", "We got exc...");
 
@@ -99,13 +100,10 @@ public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
         return null;
     }
 
-
-
     @Override
     protected void onPostExecute(Void voi) {
 
         title = (TextView) activity.findViewById(R.id.album_name);
-
         Log.w("SongAsyncTask", "We in Post...");
         if ( state == DownloadState.NOSONGS) {
             title.setText(R.string.no_info);
@@ -113,6 +111,8 @@ public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
         }
         if(state == DownloadState.ERROR){
             title.setText(R.string.error);
+        } else {
+//            title.setText(TextSelectedActivity.s);
         }
         RecyclerView recyclerView;
         recyclerView = (RecyclerView) activity.findViewById(R.id.list3);
@@ -121,7 +121,7 @@ public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
         AlbumRecyclerAdapter adapter = new AlbumRecyclerAdapter(activity);
         adapter.setCitySelectedListener((SingerSelectedListener)activity);
         recyclerView.setAdapter(adapter);
-        return;
+
     }
 
 

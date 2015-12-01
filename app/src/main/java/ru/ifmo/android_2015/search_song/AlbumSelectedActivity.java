@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import ru.ifmo.android_2015.search_song.list.AlbumSelectedListener;
 import ru.ifmo.android_2015.search_song.list.SingerSelectedListener;
 
 /**
@@ -76,7 +75,7 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
         Log.v(TAG, "onTextClicked: ");
         Intent text = new Intent(this, TextSelectedActivity.class);
         text.putExtra(TextSelectedActivity.EXTRA_TEXT, song);
-        text.putExtra(TextSelectedActivity.EXTRA_SINGER, name.getText());
+        text.putExtra(TextSelectedActivity.EXTRA_SINGER, singer);
         startActivity(text);
     }
 }
