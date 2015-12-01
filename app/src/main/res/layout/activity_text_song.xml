@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txtName"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:textSize="30dp"
+        style="@style/CustomTextView"
+        android:textColor="#200b7e"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:id="@+id/scrollText"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.83"
+        android:background="#9fb1ff" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/translation"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        style="@style/CustomTextView"
+        android:textColor="#200b7e"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="194dp"
+        android:id="@+id/scrollTranslation"
+        android:background="#8a324cf7" />
+
+</LinearLayout>
