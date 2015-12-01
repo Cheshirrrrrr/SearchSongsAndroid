@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
+        <dex dex="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/pre-dexed/release/classes-179ba5bbdd5375417dc61899c75031e61cb2d138.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.8.1/1eb6690b0c629d7000c77a72df5e822fb974f521/jsoup-1.8.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1eb6690b0c629d7000c77a72df5e822fb974f521">
+        <dex dex="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/pre-dexed/release/jsoup-1.8.1-daa28ec0ab52fc94a322a786ce421d5fce687a6b.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/pre-dexed/release/support-annotations-23.0.1-8664db02740f84fa3cc627e4f4ec74b3bbbce6a7.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/pre-dexed/release/classes-aba238f324165b7c657559be74b045fffd982acd.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/pre-dexed/release/classes-68d63470b76ec2d134a4a34dbc18fa2b86b16a1a.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/.gradle/caches/modules-2/files-2.1/org.glassfish/javax.json/1.0.4/3178f73569fd7a1e5ffc464e680f7a8cc784b85a/javax.json-1.0.4.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3178f73569fd7a1e5ffc464e680f7a8cc784b85a">
+        <dex dex="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/pre-dexed/release/javax.json-1.0.4-0af89166f93bdf9af1eb89e224f95c1aaff6f76d.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/vorona/AndroidStudioProjects/Lololo/app/build/intermediates/pre-dexed/release/internal_impl-23.0.1-2493a8ed9b233be90975fae78164a9fb79cc2254.jar" />
+    </item>
+
+</items>
