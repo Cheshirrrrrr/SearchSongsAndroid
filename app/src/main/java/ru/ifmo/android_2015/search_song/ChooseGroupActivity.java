@@ -6,30 +6,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import ru.ifmo.android_2015.search_song.list.AlbumSelectedListener;
-import ru.ifmo.android_2015.search_song.model.Album;
+import ru.ifmo.android_2015.search_song.list.FirstSelectedListener;
+import ru.ifmo.android_2015.search_song.model.Group;
 
-public class SingerSelectedActivity extends AppCompatActivity implements AlbumSelectedListener {
+/**
+ * Created by vorona on 02.12.15.
+ */
+public class ChooseGroupActivity extends AppCompatActivity implements FirstSelectedListener {
 
     public static final String EXTRA_SINGER = "singer";
-    public static final String EXTRA_ID = "id";
 
     private String singer;
-    private int id;
     private TextView name;
 
-    private AlbumsAsyncTask downloadTask;
+    private SingerAsyncTask downloadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.w(TAG, "I'm here");
-        setContentView(R.layout.activity_singer_selected);
-
+        setContentView(R.layout.activity_choose_singer);
         singer = getIntent().getStringExtra(EXTRA_SINGER);
-        id = getIntent().getIntExtra(EXTRA_ID, 0);
-
-        name = (TextView) findViewById(R.id.txtSingerName);
+        name = (TextView) findViewById(R.id.txtWritten);
+//        singer = "abba";
 
         if (singer == null) {
             Log.w(TAG, "object not provided in extra parameter: " + EXTRA_SINGER);
@@ -38,11 +37,11 @@ public class SingerSelectedActivity extends AppCompatActivity implements AlbumSe
         name.setText(singer);
 
         if (savedInstanceState != null) {
-            downloadTask = (AlbumsAsyncTask) getLastCustomNonConfigurationInstance();
+            downloadTask = (SingerAsyncTask) getLastCustomNonConfigurationInstance();
         }
         if (downloadTask == null) {
-            downloadTask = new AlbumsAsyncTask(this);
-            downloadTask.execute(id);
+            downloadTask = new SingerAsyncTask(this);
+            downloadTask.execute(singer);
         } else {
             downloadTask.attachActivity(this);
         }
@@ -69,16 +68,16 @@ public class SingerSelectedActivity extends AppCompatActivity implements AlbumSe
         super.onRestoreInstanceState(bundle);
     }
 
-    private static final String TAG = "SingerSelected";
+    private static final String TAG = "ChooseSinger";
 
     @Override
-    public void onAlbumSelected(Album album1) {
+    public void onSingerSelected(Group group) {
         Log.v(TAG, "onAlbumClicked: ");
-        Intent album = new Intent(this, AlbumSelectedActivity.class);
-        String str = album1.title;
-        album.putExtra(AlbumSelectedActivity.EXTRA_ALBUM, str);
-        album.putExtra(AlbumSelectedActivity.EXTRA_ID, album1.id);
-        album.putExtra(AlbumSelectedActivity.EXTRA_SINGER, singer);
-        startActivity(album);
+        Intent gr = new Intent(this, SingerSelectedActivity.class);
+        String str = group.title;
+//        gr.putExtra(AlbumSelectedActivity.EXTRA_ALBUM, str);
+        gr.putExtra(SingerSelectedActivity.EXTRA_ID, group.id);
+        gr.putExtra(SingerSelectedActivity.EXTRA_SINGER, str);
+        startActivity(gr);
     }
 }

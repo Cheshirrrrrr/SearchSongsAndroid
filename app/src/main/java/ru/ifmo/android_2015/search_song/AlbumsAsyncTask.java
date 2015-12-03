@@ -29,8 +29,7 @@ import ru.ifmo.android_2015.search_song.model.Group;
 import ru.ifmo.android_2015.search_song.model.AlbumInfo;
 import ru.ifmo.android_2015.search_song.model.GroupInfo;
 
-
-public class AlbumsAsyncTask extends AsyncTask<String, AlbumInfo, AlbumInfo>{
+public class AlbumsAsyncTask extends AsyncTask<Integer, AlbumInfo, AlbumInfo>{
 
     private static final String LOGTAG = "Downloading";
     private Activity activity;
@@ -72,33 +71,12 @@ public class AlbumsAsyncTask extends AsyncTask<String, AlbumInfo, AlbumInfo>{
     }
 
     @Override
-    protected AlbumInfo doInBackground(String... params) {
+    protected AlbumInfo doInBackground(Integer... params) {
         try {
             Log.w("AlbumsAsyncTask", "We went into do..." + params[0]);
             state = DownloadState.DOWNLOADING;
-
-            Group[] group = getGroup(params[0]);
-            Group res = group[0];
-
             AlbumInfo albumInfo = new AlbumInfo();
-            groupInfo = new GroupInfo();
-
-            Log.w("AlbumsAsyncTask", "We got groups");
-            if (group != null) {
-                groupInfo.setName(res.title);
-                groupInfo.setId(res.id);
-                if (res.title == null) {
-                    Log.w("AlbumsAsyncTask", "We got empty first group");
-                    state = DownloadState.NOALBS;
-                } else {
-                    state = DownloadState.DONE;
-                }
-            } else {
-                state = DownloadState.ERROR;
-            }
-
-
-            Album[] albums = getAlbums(group[0].id);
+            Album[] albums = getAlbums(params[0]);
             Log.w("AlbumsAsyncTask", "We make array");
             for (int i = 0; i < albums.length; i++) {
                 Log.w("AlbumsAsyncTask", "We make array 1");
@@ -116,14 +94,12 @@ public class AlbumsAsyncTask extends AsyncTask<String, AlbumInfo, AlbumInfo>{
         }
     }
 
-
-
     @Override
     protected void onPostExecute(AlbumInfo alb) {
 
         title = (TextView) activity.findViewById(R.id.txtSingerName);
 
-        Log.w("AlbumsAsyncTask", "We in Post...");
+        Log.w("AlbumsAsyncTask", "We in Post..."+R.id.txtSingerName);
         if (alb == null || state == DownloadState.NOALBS) {
             title.setText(R.string.no_info);
             return;
@@ -132,10 +108,9 @@ public class AlbumsAsyncTask extends AsyncTask<String, AlbumInfo, AlbumInfo>{
             title.setText(R.string.error);
         }
         else {
-            title.setText(groupInfo.getName());
+            title.setText("Выберите альбом");
         }
         RecyclerView recyclerView;
-//        Log.w("Album", "our albums: " + ArrayOfAlbums.getAlbum(0) + ", " + ArrayOfAlbums.getAlbum(1));
         recyclerView = (RecyclerView) activity.findViewById(R.id.list1);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
@@ -146,7 +121,11 @@ public class AlbumsAsyncTask extends AsyncTask<String, AlbumInfo, AlbumInfo>{
 
 
     private static Album[] getAlbums(int id) throws IOException {
-
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         JsonReader jsonReader = getJson("https://music.yandex.ru/artist/" + Integer.toString(id) + "/albums");
         JsonArray jsonAlbums = jsonReader.readObject().getJsonObject("pageData").getJsonArray("albums");
         Album[] albums = new Album[jsonAlbums.size()];
@@ -170,7 +149,7 @@ public class AlbumsAsyncTask extends AsyncTask<String, AlbumInfo, AlbumInfo>{
     public static JsonReader getJson(String searchName) throws IOException {
         Log.w("AlbumsAsyncTask", "We in getJson");
         try {
-            Thread.sleep(800);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -187,40 +166,5 @@ public class AlbumsAsyncTask extends AsyncTask<String, AlbumInfo, AlbumInfo>{
         Log.w("AlbumsAsyncTask", "We out getJson");
         return jsonReader;
     }
-
-    // json  парсер, парсит  найденые группы
-//    // JsonObject , всеравно все уже выгрузили.
-    public static Group[] getGroup(String searchName) throws IOException {
-
-        Log.w("AlbumsAsyncTask", "We in getGroup");
-        JsonReader jsonReader = getJson("https://music.yandex.ru/search?text=" + searchName);
-        Log.w("AlbumsAsyncTask", "We in getGroup 0");
-        JsonArray JsonGroups = jsonReader.readObject().getJsonObject("pageData").getJsonObject("result").getJsonObject("artists").getJsonArray("items");
-        Group groups [] = new Group[JsonGroups.size()];
-        Log.w("AlbumsAsyncTask", "We in getGroup 1");
-        for (int i = 0; i < JsonGroups.size(); i++) {
-            Log.w("AlbumsAsyncTask", "We in getGroup 2");
-            groups[i] = new Group();
-            JsonObject currentGroup = JsonGroups.getJsonObject(i);
-            groups[i].id = currentGroup.getInt("id");
-            groups[i].title = currentGroup.getString("name");
-            groups[i].tracks = currentGroup.getJsonObject("counts").getInt("tracks");
-            Object tempGenres[] = currentGroup.getJsonArray("genres").toArray();
-            groups[i].genres = new String[tempGenres.length];
-            for (int j = 0; j < tempGenres.length; j++) {
-                groups[i].genres[j] = tempGenres[j].toString();
-                tempGenres[j] = null;
-            }
-//            groups[i].coverURI = currentGroup.getJsonObject("cover").getString("uri");
-//            groups[i].coverURI = groups[i].coverURI.replace("%%", "200x200");
-
-            currentGroup = null;
-            tempGenres = null;
-        }
-
-        Log.w("AlbumsAsyncTask", "We go out getGroup");
-        return groups;
-    }
-
 
 }

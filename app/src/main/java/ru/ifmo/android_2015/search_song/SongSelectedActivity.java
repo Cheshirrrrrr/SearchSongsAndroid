@@ -10,10 +10,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.list.SingerRecyclerAdapter;
-import ru.ifmo.android_2015.search_song.list.SingerSelectedListener;
 import ru.ifmo.android_2015.search_song.list.RecylcerDividersDecorator;
 import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
-import ru.ifmo.android_2015.search_song.model.Album;
 
 /**
  * Created by vorona on 24.11.15.
@@ -85,7 +83,7 @@ public class SongSelectedActivity extends AppCompatActivity implements SongSelec
         Log.v(TAG, "onTextClicked: ");
         Intent text = new Intent(this, TextSelectedActivity.class);
 //        String str = album.title;
-        text.putExtra(TextSelectedActivity.EXTRA_TEXT, song);
+        text.putExtra(TextSelectedActivity.EXTRA_SONG, song);
 //        text.putExtra(TextSelectedActivity.EXTRA_SINGER, );
         startActivity(text);
     }

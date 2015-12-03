@@ -27,9 +27,11 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
         super.onCreate(savedInstanceState);
         Log.w(TAG, "I'm here");
         setContentView(R.layout.activity_album_selected);
+
         album = getIntent().getStringExtra(EXTRA_ALBUM);
         singer = getIntent().getStringExtra(EXTRA_SINGER);
         id = getIntent().getIntExtra(EXTRA_ID, 0);
+
         name = (TextView) findViewById(R.id.album_name);
 
         if (album == null) {
@@ -43,7 +45,7 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
         }
         if (downloadTask == null) {
             downloadTask = new SongAsyncTask(this);
-            downloadTask.execute(id);
+            downloadTask.execute(id, album);
         } else {
             downloadTask.attachActivity(this);
         }
@@ -74,7 +76,7 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
     public void onSingerSelected(String song) {
         Log.v(TAG, "onTextClicked: ");
         Intent text = new Intent(this, TextSelectedActivity.class);
-        text.putExtra(TextSelectedActivity.EXTRA_TEXT, song);
+        text.putExtra(TextSelectedActivity.EXTRA_SONG, song);
         text.putExtra(TextSelectedActivity.EXTRA_SINGER, singer);
         startActivity(text);
     }

@@ -41,7 +41,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
 //        Album album = ArrayOfAlbums.getAlbum(position);
         Log.w("SongAsyncTask", "We're trying to bind");
         holder.cityNameView.setText(song);
-        holder.itemView.setTag(R.id.tag_city, song); //TODO
+        holder.itemView.setTag(R.id.tag, song); //TODO
 //        Log.w("SongAsyncTask", "We're trying to bind" + album.title);
     }
 
@@ -52,7 +52,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
 
     @Override
     public void onClick(View v) {
-        String song = (String) v.getTag(R.id.tag_city);
+        String song = (String) v.getTag(R.id.tag);
         if (citySelectedListener != null && song!= null) {
             citySelectedListener.onSingerSelected(song);
         }

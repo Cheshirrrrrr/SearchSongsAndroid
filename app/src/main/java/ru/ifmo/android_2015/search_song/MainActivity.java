@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSingerClicked(View view) {
         Log.v(TAG, "onSingerClicked: " + view);
-        Intent singer = new Intent(this, SingerSelectedActivity.class);
+        Intent singer = new Intent(this, ChooseGroupActivity.class);
         String str = search.getText().toString();
-        singer.putExtra(SingerSelectedActivity.EXTRA_SINGER, str);
+        singer.putExtra(ChooseGroupActivity.EXTRA_SINGER, str);
         startActivity(singer);
     }
 

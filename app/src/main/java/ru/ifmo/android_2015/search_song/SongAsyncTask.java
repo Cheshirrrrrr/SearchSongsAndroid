@@ -27,11 +27,12 @@ import ru.ifmo.android_2015.search_song.model.ArrayOfSongs;
 /**
  * Created by vorona on 29.11.15.
  */
-public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
+public class SongAsyncTask extends AsyncTask<Object, Void, Void> {
     private static final String LOGTAG = "Downloading";
     private Activity activity;
     private DownloadState state;
     private TextView title;
+    private String album_title = "";
 
     enum DownloadState {
         DOWNLOADING(R.string.downloading),
@@ -66,11 +67,12 @@ public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Integer... params) {
+    protected Void doInBackground(Object... params) {
+        album_title = (String) params[1];
         try {
             Log.w("SongAsyncTask", "We went into do..." + params[0]);
             state = DownloadState.DOWNLOADING;
-            String[] songs = getSongs(params[0]);
+            String[] songs = getSongs((Integer)params[0]);
 
             Log.w("SongAsyncTask", "We got groups");
             if (songs != null) {
@@ -112,7 +114,7 @@ public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
         if(state == DownloadState.ERROR){
             title.setText(R.string.error);
         } else {
-//            title.setText(TextSelectedActivity.s);
+            title.setText(album_title);
         }
         RecyclerView recyclerView;
         recyclerView = (RecyclerView) activity.findViewById(R.id.list3);
@@ -126,6 +128,12 @@ public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
 
 
     private static String[] getSongs(int id) throws IOException {
+        Log.w("SongAsyncTask", "We in getJson");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         JsonReader jsonReader = getJson("https://music.yandex.ru/album/" + Integer.toString(id));
         JsonArray jsonVolumes = jsonReader.readObject().getJsonObject("pageData").getJsonArray("volumes");
         int size = 0;
@@ -148,6 +156,11 @@ public class SongAsyncTask extends AsyncTask<Integer, Void, Void> {
     //      ищет по запросу группы, вытаскивает из html  страницы яндекс музыки информацию о найденых группах в формате json
     public static JsonReader getJson(String searchName) throws IOException {
         Log.w("SongAsyncTask", "We in getJson");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Document html = Jsoup.connect(searchName).get();
         Log.w("SongAsyncTask", "We in getJson1");
         String json = html.body().child(0).data();

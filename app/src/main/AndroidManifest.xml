@@ -20,6 +20,7 @@
         <activity android:name="ru.ifmo.android_2015.search_song.SongSelectedActivity"/>
         <activity android:name="ru.ifmo.android_2015.search_song.AlbumSelectedActivity"/>
         <activity android:name="ru.ifmo.android_2015.search_song.TextSelectedActivity"/>
+        <activity android:name="ru.ifmo.android_2015.search_song.ChooseGroupActivity"/>
     </application>
 
 </manifest>

@@ -10,10 +10,10 @@ import android.widget.TextView;
  */
 public class TextSelectedActivity extends AppCompatActivity{
 
-    public static final String EXTRA_TEXT = "text";
+    public static final String EXTRA_SONG = "song";
     public static final String EXTRA_SINGER = "singer";
 
-    private String text, singer;
+    private String song, singer;
     private TextView name;
     private TextAsyncTask downloadTask;
 
@@ -22,22 +22,22 @@ public class TextSelectedActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         Log.w(TAG, "I'm here");
         setContentView(R.layout.activity_text_song);
-        text = getIntent().getStringExtra(EXTRA_TEXT);
+        song = getIntent().getStringExtra(EXTRA_SONG);
         singer = getIntent().getStringExtra(EXTRA_SINGER);
         name = (TextView) findViewById(R.id.txtName);
 
-        if (text == null) {
-            Log.w(TAG, "object not provided in extra parameter: " + EXTRA_TEXT);
+        if (song == null) {
+            Log.w(TAG, "object not provided in extra parameter: " + EXTRA_SONG);
             finish();
         }
-        name.setText(singer + " - " + text);
+        name.setText(singer + " - " + song);
 
         if (savedInstanceState != null) {
             downloadTask = (TextAsyncTask) getLastCustomNonConfigurationInstance();
         }
         if (downloadTask == null) {
             downloadTask = new TextAsyncTask(this);
-            downloadTask.execute(text, singer);
+            downloadTask.execute(song, singer);
         } else {
             downloadTask.attachActivity(this);
         }

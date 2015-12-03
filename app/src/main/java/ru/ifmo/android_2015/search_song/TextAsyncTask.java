@@ -83,7 +83,12 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
                 state = DownloadState.ERROR;
             }
             int flag = onAmalgama(song, songs);
-            if (flag >= 0) printInformation(group, song);
+
+            if (flag >= 0) {
+                printInformation(group, song);
+                group += "true";
+            }
+
 
         } catch (Exception e) {
             Log.e(LOGTAG, e.getMessage());
@@ -111,7 +116,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             text.setText("Text");
             if (!textOfSong.equals("")) text.setText(textOfSong);
             translation.setText("Translation");
-            if (!translOfSong.equals("")) text.setText(translOfSong);
+            if (!translOfSong.equals("")) translation.setText(translOfSong);
         }
     }
 
@@ -121,7 +126,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
 
     public static String[] amalgamaTranslations(String groupName) throws IOException, InterruptedException {
         groupName = amalgamaFormat(groupName, IGNORE_THE, "_");
-        Thread.sleep(200);
+        Thread.sleep(500);
         Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + groupName.charAt(0) +"/" + groupName + "/").get();
         Object listOfUl[] = html.body().getElementById("songs_nav").select("ul").toArray();
         Document translationList = Jsoup.parse(listOfUl[1].toString());
