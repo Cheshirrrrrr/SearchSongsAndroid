@@ -5,7 +5,7 @@
     <string name="error">Ошибка</string>
     <string name="no_info">Не найдено по вашему запросу</string>
     <string name="sorry">Что-то пошло не так. Нам очень жаль.</string>
-    <string name="search_for">Искать по </string>
+    <string name="search_for">Введите название песни или исполнителя</string>
     <string name="singer">Исполнителю</string>
     <string name="song">Названию песни</string>
     <string name="welcome">Мы готовы искать для Вас!</string>

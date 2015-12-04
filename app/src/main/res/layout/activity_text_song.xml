@@ -23,7 +23,8 @@
         android:id="@+id/scrollText"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.83"
-        android:background="#9fb1ff" />
+        android:background="#9fb1ff"
+        android:padding="10dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -42,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="194dp"
         android:id="@+id/scrollTranslation"
-        android:background="#8a324cf7" />
+        android:background="#8a324cf7"
+        android:padding="10dp" />
 
 </LinearLayout>
