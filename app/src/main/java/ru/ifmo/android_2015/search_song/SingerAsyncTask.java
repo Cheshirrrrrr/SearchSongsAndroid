@@ -145,7 +145,7 @@ public class SingerAsyncTask extends AsyncTask<String, GroupInfo, GroupInfo> {
 
     //      ищет по запросу группы, вытаскивает из html  страницы яндекс музыки информацию о найденых группах в формате json
     public static JsonReader getJson(String searchName) throws IOException {
-        Log.w("AlbumsAsyncTask", "We in getJson");
+        Log.w("SingerAsyncTask", "We in getJson");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

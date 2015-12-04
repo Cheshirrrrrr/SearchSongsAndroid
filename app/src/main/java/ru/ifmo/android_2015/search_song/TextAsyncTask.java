@@ -3,6 +3,7 @@ package ru.ifmo.android_2015.search_song;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -84,9 +85,10 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             }
             int flag = onAmalgama(song, songs);
 
-            if (flag >= 0) {
+            if (flag >= 0 && flag < songs.length) {
                 printInformation(group, song);
-                group += "true";
+            }  else {
+                state  = DownloadState.NOSONGS;
             }
 
 
@@ -106,6 +108,9 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         Log.w("TextAsyncTask", "We in Post...");
         if ( state == DownloadState.NOSONGS) {
             title.setText(R.string.no_info);
+            text.setVisibility(View.INVISIBLE);
+            translation.setVisibility(View.INVISIBLE);
+            activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
             return;
         }
         if(state == DownloadState.ERROR){
@@ -126,7 +131,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
 
     public static String[] amalgamaTranslations(String groupName) throws IOException, InterruptedException {
         groupName = amalgamaFormat(groupName, IGNORE_THE, "_");
-        Thread.sleep(500);
+//        Thread.sleep(500);
         Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + groupName.charAt(0) +"/" + groupName + "/").get();
         Object listOfUl[] = html.body().getElementById("songs_nav").select("ul").toArray();
         Document translationList = Jsoup.parse(listOfUl[1].toString());
@@ -172,24 +177,18 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         Object text[] = html.getElementsByClass("original").toArray();
         String txt = "";
         for (Object aText : text) {
-            txt += Jsoup.parse(aText.toString()).text();
+            txt += Jsoup.parse(aText.toString()).text() + "\n";
         }
 
         text = html.getElementsByClass("translate").toArray();
         String transl = "";
         for (Object aText : text) {
-           transl += Jsoup.parse(aText.toString()).text();
+           transl +=  Jsoup.parse(aText.toString()).text() + "\n";
         }
         textOfSong = txt;
         translOfSong = transl;
 //        printTextByClass(html, "translate");
     }
 
-    public static void printTextByClass (Document html, String className) {
-        Object text[] = html.getElementsByClass(className).toArray();
-        for (Object aText : text) {
-            System.out.println(Jsoup.parse(aText.toString()).text());
-        }
-    }
 
 }
