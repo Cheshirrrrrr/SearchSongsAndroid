@@ -11,7 +11,6 @@
     android:focusableInTouchMode="false"
     android:focusable="true"
     android:clickable="true"
-    android:background="@drawable/item_selector_bg"
-    style="@style/CustomTextView"
-    />
+    android:background="@drawable/item"
+    style="@style/CustomTextView" />
 
