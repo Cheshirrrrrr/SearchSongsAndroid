@@ -7,20 +7,28 @@ import android.util.Log;
 import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.list.SingerSelectedListener;
+import ru.ifmo.android_2015.search_song.model.Group;
 
 /**
  * Created by vorona on 24.11.15.
  */
 public class AlbumSelectedActivity extends AppCompatActivity implements SingerSelectedListener {
 
-    public static final String EXTRA_ALBUM = "album";
-    public static final String EXTRA_SINGER = "singer";
-    public static final String EXTRA_ID = "id";
 
-    private String album, singer;
+    public static final String EXTRA_ID = "id";
+    public static final String EXTRA_COVER = "cover";
+    public static final String EXTRA_TITLE= "title";
+    public static final String EXTRA_RELEVANT= "relevant";
+    public static final String EXTRA_BIO= "bio";
+    public static final String EXTRA_ALBUM= "album";
+//    public static final String EXTRA_GROUP = "group";
+
+
+    private String album, singer, cover, rel, bio;
     private TextView name;
     private SongAsyncTask downloadTask;
-    private  int id = 0;
+    private  String id;
+    private  Group gr = new Group();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +37,12 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
         setContentView(R.layout.activity_album_selected);
 
         album = getIntent().getStringExtra(EXTRA_ALBUM);
-        singer = getIntent().getStringExtra(EXTRA_SINGER);
-        id = getIntent().getIntExtra(EXTRA_ID, 0);
+        singer = getIntent().getStringExtra(EXTRA_TITLE);
+        id = getIntent().getStringExtra(EXTRA_ID);
+        cover = getIntent().getStringExtra(EXTRA_COVER);
+        bio = getIntent().getStringExtra(EXTRA_BIO);
+        rel = getIntent().getStringExtra(EXTRA_RELEVANT);
+//        gr = getIntent().getParcelableExtra(EXTRA_GROUP);
 
         name = (TextView) findViewById(R.id.album_name);
 
@@ -45,7 +57,13 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
         }
         if (downloadTask == null) {
             downloadTask = new SongAsyncTask(this);
-            downloadTask.execute(id, album);
+            gr.id = id;
+            gr.bioURI = bio;
+            gr.relevant = rel;
+            gr.coverURI = cover;
+            gr.title = singer;
+
+            downloadTask.execute(gr);
         } else {
             downloadTask.attachActivity(this);
         }

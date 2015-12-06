@@ -2,6 +2,7 @@ package ru.ifmo.android_2015.search_song;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -25,6 +26,11 @@ public class TextSelectedActivity extends AppCompatActivity{
         song = getIntent().getStringExtra(EXTRA_SONG);
         singer = getIntent().getStringExtra(EXTRA_SINGER);
         name = (TextView) findViewById(R.id.txtName);
+        TextView textview= (TextView) findViewById(R.id.scrollText);
+        textview.setMovementMethod(new ScrollingMovementMethod());
+        textview= (TextView) findViewById(R.id.scrollTranslation);
+        textview.setMovementMethod(new ScrollingMovementMethod());
+
 
         if (song == null) {
             Log.w(TAG, "object not provided in extra parameter: " + EXTRA_SONG);

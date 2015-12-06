@@ -4,7 +4,7 @@ package ru.ifmo.android_2015.search_song.model;
  * Created by vorona on 29.11.15.
  */
 public class GroupInfo {
-    int id = 0;
+    String id = "";
     String title = "";
     int tracks = 0;
     String genres [] = null;
@@ -19,11 +19,11 @@ public class GroupInfo {
         return title;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

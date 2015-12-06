@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Search for you :3 </string>
+    <string name="app_name">Searching for you :3 </string>
     <string name="downloading">Идет загрузка...</string>
     <string name="done">Готово</string>
     <string name="error">Ошибка</string>
     <string name="no_info">Не найдено по вашему запросу</string>
     <string name="sorry">Что-то пошло не так. Нам очень жаль.</string>
     <string name="search_for">Введите название песни или исполнителя</string>
-    <string name="singer">Исполнителю</string>
-    <string name="song">Названию песни</string>
+    <string name="singer">По исполнителю</string>
+    <string name="song">По названию песни</string>
     <string name="welcome">Мы готовы искать для Вас!</string>
     <string name="translation">Перевод</string>
     <string name="loading">Загрузка</string>

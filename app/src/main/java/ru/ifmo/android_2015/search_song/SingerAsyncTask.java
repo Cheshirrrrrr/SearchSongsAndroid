@@ -10,9 +10,13 @@ import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -71,6 +75,7 @@ public class SingerAsyncTask extends AsyncTask<String, GroupInfo, GroupInfo> {
     }
 
     private void updateView(Activity activity) {
+
         Log.w("SingerAsyncTask", "We try to update");
 
     }
@@ -109,7 +114,7 @@ public class SingerAsyncTask extends AsyncTask<String, GroupInfo, GroupInfo> {
 
             return groupInfo;
         } catch (Exception e) {
-            Log.e(LOGTAG, e.getMessage());
+//            Log.e(LOGTAG, e.getMessage());
             Log.w("SingerAsyncTask", "We got exc...");
             return null;
         }
@@ -142,60 +147,40 @@ public class SingerAsyncTask extends AsyncTask<String, GroupInfo, GroupInfo> {
         recyclerView.setAdapter(adapter);
     }
 
-
-    //      ищет по запросу группы, вытаскивает из html  страницы яндекс музыки информацию о найденых группах в формате json
-    public static JsonReader getJson(String searchName) throws IOException {
-        Log.w("SingerAsyncTask", "We in getJson");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Document html = Jsoup.connect(searchName).get();
-        Log.w("SingerAsyncTask", "We in getJson1");
-        String json = html.body().child(0).data();
-        Log.w("SingerAsyncTask", "We in getJson2");
-        String groupInformation = json.substring(json.indexOf('{'), json.lastIndexOf("}") + 1);
-        Log.w("SingerAsyncTask", "We in getJson3");
-        // создает JsonReader  и парсит его
-        StringReader reader = new StringReader(groupInformation);
-        Log.w("SingerAsyncTask", "We in getJson4");
-        JsonReader jsonReader = Json.createReader(reader);
-        Log.w("SingerAsyncTask", "We out getJson");
-        return jsonReader;
-    }
-
-    // json  парсер, парсит  найденые группы
-//    // JsonObject , всеравно все уже выгрузили.
     public static Group[] getGroup(String searchName) throws IOException {
 
         Log.w("SingerAsyncTask", "We in getGroup");
-        JsonReader jsonReader = getJson("https://music.yandex.ru/search?text=" + searchName);
-        Log.w("SingerAsyncTask", "We in getGroup 0");
-        JsonArray JsonGroups = jsonReader.readObject().getJsonObject("pageData").getJsonObject("result").getJsonObject("artists").getJsonArray("items");
-        Group groups [] = new Group[JsonGroups.size()];
-        Log.w("SingerAsyncTask", "We in getGroup 1");
-        for (int i = 0; i < JsonGroups.size(); i++) {
-            Log.w("SingerAsyncTask", "We in getGroup 2");
+        Document html = Jsoup.connect("http://megalyrics.ru/search?utf8=✓&search=" + searchName).get();
+        Log.w("SingerAsyncTask", "We in getGroup0");
+        Elements artists = html.getElementById("artists_list").select("a");
+        Log.w("SingerAsyncTask", "We in getGroup0,5");
+        Group [] groups = new Group[artists.size()];
+        Log.w("SingerAsyncTask", "We in getGroup1");
+        int i = 0;
+        for(Element artist : artists) {
             groups[i] = new Group();
-            JsonObject currentGroup = JsonGroups.getJsonObject(i);
-            groups[i].id = currentGroup.getInt("id");
-            groups[i].title = currentGroup.getString("name");
-            groups[i].tracks = currentGroup.getJsonObject("counts").getInt("tracks");
-            Object tempGenres[] = currentGroup.getJsonArray("genres").toArray();
-            groups[i].genres = new String[tempGenres.length];
-            for (int j = 0; j < tempGenres.length; j++) {
-                groups[i].genres[j] = tempGenres[j].toString();
-                tempGenres[j] = null;
-            }
-//            groups[i].coverURI = currentGroup.getJsonObject("cover").getString("uri");
-//            groups[i].coverURI = groups[i].coverURI.replace("%%", "200x200");
+            groups[i].id = artist.absUrl("href");
+            groups[i].coverURI = artist.select("img[src]").attr("src");
+            groups[i].title = artist.getElementsByClass("name").text();
+            groups[i].relevant = artist.getElementsByClass("plays").text();
+            i++;
 
-            currentGroup = null;
-            tempGenres = null;
         }
+        Log.w("SingerAsyncTask", "We in getGroup2");
+        Arrays.sort(groups, new Comparator<Group>() {
+                    @Override
+                    public int compare(Group g1, Group g2) {
+                        int len1 = g1.relevant.length();
+                        int len2 = g2.relevant.length();
+                        if (len1 == len2) {
+                            return g2.relevant.compareTo(g1.relevant);
+                        }
+                        return len2 - len1;
+                    }
+                });
 
-        Log.w("SingerAsyncTask", "We go out getGroup");
+
+                Log.w("SingerAsyncTask", "We go out getGroup");
         return groups;
     }
 

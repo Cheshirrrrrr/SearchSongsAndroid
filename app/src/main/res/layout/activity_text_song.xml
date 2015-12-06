@@ -15,7 +15,9 @@
         android:gravity="center"
         android:textSize="30dp"
         style="@style/CustomTextView"
-        android:textColor="#200b7e"/>
+        android:textColor="#200b7e"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -23,8 +25,14 @@
         android:id="@+id/scrollText"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.83"
-        android:background="#9fb1ff"
-        android:padding="10dp" />
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:background="@drawable/bckgr"
+        android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -43,7 +51,14 @@
         android:layout_width="match_parent"
         android:layout_height="194dp"
         android:id="@+id/scrollTranslation"
-        android:background="#8a324cf7"
-        android:padding="10dp" />
+        android:background="@drawable/bckgr"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+
+        android:textSize="15dp"
+        android:textColor="#ffffff"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp" />
 
 </LinearLayout>

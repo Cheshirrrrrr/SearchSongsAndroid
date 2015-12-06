@@ -1,18 +1,28 @@
 package ru.ifmo.android_2015.search_song;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -23,16 +33,19 @@ import ru.ifmo.android_2015.search_song.list.AlbumRecyclerAdapter;
 import ru.ifmo.android_2015.search_song.list.AlbumSelectedListener;
 import ru.ifmo.android_2015.search_song.list.SingerSelectedListener;
 import ru.ifmo.android_2015.search_song.model.ArrayOfSongs;
+import ru.ifmo.android_2015.search_song.model.Group;
+import ru.ifmo.android_2015.search_song.model.Tracks;
 
 /**
  * Created by vorona on 29.11.15.
  */
-public class SongAsyncTask extends AsyncTask<Object, Void, Void> {
+public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
     private static final String LOGTAG = "Downloading";
     private Activity activity;
     private DownloadState state;
     private TextView title;
     private String album_title = "";
+    private Group group = new Group();
 
     enum DownloadState {
         DOWNLOADING(R.string.downloading),
@@ -67,12 +80,13 @@ public class SongAsyncTask extends AsyncTask<Object, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Object... params) {
-        album_title = (String) params[1];
+    protected Void doInBackground(Group... params) {
+        album_title = params[0].title;
+        group = params[0];
         try {
             Log.w("SongAsyncTask", "We went into do..." + params[0]);
             state = DownloadState.DOWNLOADING;
-            String[] songs = getSongs((Integer)params[0]);
+            Tracks[] songs = getSongs(params[0]);
 
             Log.w("SongAsyncTask", "We got groups");
             if (songs != null) {
@@ -88,7 +102,7 @@ public class SongAsyncTask extends AsyncTask<Object, Void, Void> {
             Log.w("SongAsyncTask", "We make array");
             for (int i = 0; i < songs.length; i++) {
                 Log.w("SongAsyncTask", "We make array 1");
-                ArrayOfSongs.addSong(songs[i]);
+                ArrayOfSongs.addSong(songs[i].title);
                 Log.w("SongAsyncTask", "We make array 2");
             }
             Log.w("SongAsyncTask", "We make array 4");
@@ -121,58 +135,73 @@ public class SongAsyncTask extends AsyncTask<Object, Void, Void> {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
         AlbumRecyclerAdapter adapter = new AlbumRecyclerAdapter(activity);
-        adapter.setCitySelectedListener((SingerSelectedListener)activity);
+        adapter.setCitySelectedListener((SingerSelectedListener) activity);
         recyclerView.setAdapter(adapter);
 
-    }
+        ImageView view = (ImageView) activity.findViewById(R.id.album_image);
+        ProgressBar pr = (ProgressBar) activity.findViewById(R.id.progress3);
+        pr.setVisibility(View.INVISIBLE);
+        if (group == null || state == DownloadState.NOSONGS) {
+            view.setImageResource(R.drawable.sorry);
+            return;
+        }
+        if(state == DownloadState.ERROR){
+            view.setImageResource(R.drawable.sorry);
+            title.setText(R.string.error);
+            return;
+        }
 
-
-    private static String[] getSongs(int id) throws IOException {
-        Log.w("SongAsyncTask", "We in getJson");
         try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
+            view.setImageBitmap(getBitmap(group));
+        } catch (IOException e) {
+            title.setText("aaaaaa");
             e.printStackTrace();
         }
-        JsonReader jsonReader = getJson("https://music.yandex.ru/album/" + Integer.toString(id));
-        JsonArray jsonVolumes = jsonReader.readObject().getJsonObject("pageData").getJsonArray("volumes");
-        int size = 0;
-        for (int i = 0; i < jsonVolumes.size(); i++) {
-            size += jsonVolumes.getJsonArray(i).size();
-        }
-        String songs[] = new String[size];
-        int k = 0;
-        for (int i = 0; i < jsonVolumes.size(); i++)  {
-            JsonArray currentVolume = jsonVolumes.getJsonArray(i);
-            for (int j = 0; j < currentVolume.size(); j++, k++) {
-                songs[k] = currentVolume.getJsonObject(j).getString("title");
 
+    }
+    private Bitmap getBitmap(Group group) throws IOException {
+        HttpURLConnection connection = null;
+        InputStream is = null;
+        Bitmap bitmap = null;
+        try {
+            connection = (HttpURLConnection) (new URL("http://megalyrics.ru" + group.coverURI)).openConnection();
+            is = connection.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+        } catch (Exception e) {
+            title.setText("bbbbbb");
+            ImageView view = (ImageView) activity.findViewById(R.id.imageView);
+            view.setImageResource(R.drawable.sorry);
+        } finally {
+            if (is != null) {
+                is.close();
             }
-            currentVolume = null;
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
-        return songs;
+        return  bitmap;
     }
 
-    //      ищет по запросу группы, вытаскивает из html  страницы яндекс музыки информацию о найденых группах в формате json
-    public static JsonReader getJson(String searchName) throws IOException {
+
+    private static Tracks[] getSongs(Group group) throws IOException {
         Log.w("SongAsyncTask", "We in getJson");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        Document html = Jsoup.connect(group.id).get();
+        Elements songs = html.getElementsByClass("st-title");
+        System.out.println(songs);
+        Tracks[] tracks = new Tracks[songs.size() - 1];
+        int i = -1;
+        for (Element song :songs) {
+            if(i == -1) {
+                i++;
+                continue;
+            }
+            tracks[i] = new Tracks();
+            tracks[i].title = song.text();
+            tracks[i].source = "http://megalyrics.ru/" + song.select("a").attr("href");
+            i++;
         }
-        Document html = Jsoup.connect(searchName).get();
-        Log.w("SongAsyncTask", "We in getJson1");
-        String json = html.body().child(0).data();
-        Log.w("SongAsyncTask", "We in getJson2");
-        String groupInformation = json.substring(json.indexOf('{'), json.lastIndexOf("}") + 1);
-        Log.w("SongAsyncTask", "We in getJson3");
-        // создает JsonReader  и парсит его
-        StringReader reader = new StringReader(groupInformation);
-        Log.w("SongAsyncTask", "We in getJson4");
-        JsonReader jsonReader = Json.createReader(reader);
-        Log.w("SongAsyncTask", "We out getJson");
-        return jsonReader;
+        group.bioURI = html.getElementsByClass("text").select("a").first().absUrl("href");
+        return tracks;
     }
 
 }

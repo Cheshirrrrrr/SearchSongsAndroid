@@ -50,37 +50,6 @@
 
     </LinearLayout>
 
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/textSearch"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-       <!-- -->
-        <!--android:textSize="20dp"-->
-        <!--android:textColor="#526df4"-->
-        <!--style="@style/CustomTextView"-->
-        <!--android:layout_below="@+id/linearLayout"-->
-        <!--android:inputType="text"-->
-        <!--android:background="#ffffff"-->
-        <!--android:layout_above="@+id/button2" />-->
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome"
-        android:id="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="23dp"
-        android:textColor="#200b7e"
-        android:gravity="center"
-        style="@style/CustomTextView"
-        android:visibility="invisible" />
 
     <TextView
         android:layout_width="match_parent"
@@ -112,7 +81,8 @@
         android:textColor="#200b7e"
         android:background="#ffffff"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"
+        android:textSize="10dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -129,7 +99,8 @@
         android:layout_marginRight="20dp"
         android:textColor="#200b7e"
         android:background="#ffffff"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"
+        android:textSize="10dp" />
 
     <EditText
         android:layout_width="fill_parent"

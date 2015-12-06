@@ -2,6 +2,7 @@ package ru.ifmo.android_2015.search_song;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -64,6 +65,8 @@ public class ChooseGroupActivity extends AppCompatActivity implements FirstSelec
     public void onRestoreInstanceState(Bundle bundle) {
         if (bundle != null) {
             name.setText(bundle.getString("TITLE"));
+
+
         }
         super.onRestoreInstanceState(bundle);
     }
@@ -73,11 +76,15 @@ public class ChooseGroupActivity extends AppCompatActivity implements FirstSelec
     @Override
     public void onSingerSelected(Group group) {
         Log.v(TAG, "onAlbumClicked: ");
-        Intent gr = new Intent(this, SingerSelectedActivity.class);
-        String str = group.title;
-//        gr.putExtra(AlbumSelectedActivity.EXTRA_ALBUM, str);
-        gr.putExtra(SingerSelectedActivity.EXTRA_ID, group.id);
-        gr.putExtra(SingerSelectedActivity.EXTRA_SINGER, str);
+        Intent gr = new Intent(this, AlbumSelectedActivity.class);
+        gr.putExtra(AlbumSelectedActivity.EXTRA_ID, group.id);
+        gr.putExtra(AlbumSelectedActivity.EXTRA_ALBUM, "asdf");
+        gr.putExtra(AlbumSelectedActivity.EXTRA_TITLE, group.title);
+        gr.putExtra(AlbumSelectedActivity.EXTRA_COVER, group.coverURI);
+        gr.putExtra(AlbumSelectedActivity.EXTRA_RELEVANT, group.relevant);
+        gr.putExtra(AlbumSelectedActivity.EXTRA_BIO, group.bioURI);
+//        gr.putExtra(AlbumSelectedActivity.EXTRA_GROUP, group);
         startActivity(gr);
+
     }
 }

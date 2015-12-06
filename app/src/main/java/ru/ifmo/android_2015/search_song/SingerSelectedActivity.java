@@ -78,7 +78,7 @@ public class SingerSelectedActivity extends AppCompatActivity implements AlbumSe
         String str = album1.title;
         album.putExtra(AlbumSelectedActivity.EXTRA_ALBUM, str);
         album.putExtra(AlbumSelectedActivity.EXTRA_ID, album1.id);
-        album.putExtra(AlbumSelectedActivity.EXTRA_SINGER, singer);
+        album.putExtra(AlbumSelectedActivity.EXTRA_TITLE, singer);
         startActivity(album);
     }
 }
