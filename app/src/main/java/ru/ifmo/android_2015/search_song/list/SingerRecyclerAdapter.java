@@ -12,7 +12,7 @@ import ru.ifmo.android_2015.search_song.R;
 import ru.ifmo.android_2015.search_song.model.Album;
 import ru.ifmo.android_2015.search_song.model.ArrayOfAlbums;
 
-public class SingerRecyclerAdapter extends RecyclerView.Adapter<SingerRecyclerAdapter.CityViewHolder>
+public class SingerRecyclerAdapter extends RecyclerView.Adapter<SingerRecyclerAdapter.ViewHolder>
         implements View.OnClickListener {
 
     private final LayoutInflater layoutInflater;
@@ -27,17 +27,17 @@ public class SingerRecyclerAdapter extends RecyclerView.Adapter<SingerRecyclerAd
     }
 
     @Override
-    public CityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_city, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = layoutInflater.inflate(R.layout.item, parent, false);
         view.setOnClickListener(this);
-        return new CityViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CityViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Album album = ArrayOfAlbums.getAlbum(position);
         Log.w("AlbumsAsyncTask", "We're trying to bind");
-        holder.cityNameView.setText(album.title);
+        holder.sNameView.setText(album.title);
         holder.itemView.setTag(R.id.tag, album);
         Log.w("AlbumsAsyncTask", "We're trying to bind" + album.title);
     }
@@ -55,13 +55,13 @@ public class SingerRecyclerAdapter extends RecyclerView.Adapter<SingerRecyclerAd
         }
     }
 
-    static class CityViewHolder extends RecyclerView.ViewHolder {
-        final TextView cityNameView;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        final TextView sNameView;
 
-        public CityViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             Log.w("AlbumsAsyncTask", "We're trying to create holder");
-            cityNameView = (TextView) itemView.findViewById(R.id.album_name);
+            sNameView = (TextView) itemView.findViewById(R.id.album_name);
         }
     }
 }

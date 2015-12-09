@@ -1,8 +1,10 @@
 package ru.ifmo.android_2015.search_song;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,23 +16,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.StringReader;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-
-import ru.ifmo.android_2015.search_song.list.AlbumSelectedListener;
 import ru.ifmo.android_2015.search_song.list.FirstRecyclerAdapter;
 import ru.ifmo.android_2015.search_song.list.FirstSelectedListener;
 import ru.ifmo.android_2015.search_song.list.RecylcerDividersDecorator;
-import ru.ifmo.android_2015.search_song.list.SingerRecyclerAdapter;
-import ru.ifmo.android_2015.search_song.model.Album;
-import ru.ifmo.android_2015.search_song.model.AlbumInfo;
-import ru.ifmo.android_2015.search_song.model.ArrayOfAlbums;
 import ru.ifmo.android_2015.search_song.model.ArrayOfSingers;
 import ru.ifmo.android_2015.search_song.model.Group;
 import ru.ifmo.android_2015.search_song.model.GroupInfo;
@@ -114,7 +107,6 @@ public class SingerAsyncTask extends AsyncTask<String, GroupInfo, GroupInfo> {
 
             return groupInfo;
         } catch (Exception e) {
-//            Log.e(LOGTAG, e.getMessage());
             Log.w("SingerAsyncTask", "We got exc...");
             return null;
         }
@@ -147,10 +139,12 @@ public class SingerAsyncTask extends AsyncTask<String, GroupInfo, GroupInfo> {
         recyclerView.setAdapter(adapter);
     }
 
+
     public static Group[] getGroup(String searchName) throws IOException {
 
         Log.w("SingerAsyncTask", "We in getGroup");
-        Document html = Jsoup.connect("http://megalyrics.ru/search?utf8=✓&search=" + searchName).get();
+        searchName = "http://megalyrics.ru/search?utf8=✓&search=" + URLEncoder.encode(searchName, "utf-8");
+        Document html = Jsoup.connect(searchName).get();
         Log.w("SingerAsyncTask", "We in getGroup0");
         Elements artists = html.getElementById("artists_list").select("a");
         Log.w("SingerAsyncTask", "We in getGroup0,5");

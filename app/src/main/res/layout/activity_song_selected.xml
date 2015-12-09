@@ -24,6 +24,7 @@
         android:layout_height="match_parent"
         tools:context="project.project.SongSelectedActivity"
         style="@style/CustomListView"
-        />
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
 </LinearLayout>
 

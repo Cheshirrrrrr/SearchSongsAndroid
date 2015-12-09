@@ -45,15 +45,15 @@ public class Group implements Parcelable {
         bioURI = src.readString();
     }
 
-    public static final Creator<City> CREATOR = new Creator<City>() {
+    public static final Creator<Group> CREATOR = new Creator<Group>() {
         @Override
-        public City createFromParcel(Parcel source) {
-            return new City(source);
+        public Group createFromParcel(Parcel source) {
+            return new Group(source);
         }
 
         @Override
-        public City[] newArray(int size) {
-            return new City[size];
+        public Group[] newArray(int size) {
+            return new Group[size];
         }
     };
 }

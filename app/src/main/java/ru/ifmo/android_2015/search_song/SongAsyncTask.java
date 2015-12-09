@@ -20,17 +20,13 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonReader;
+import java.net.URLEncoder;
 
 import ru.ifmo.android_2015.search_song.list.RecylcerDividersDecorator;
 import ru.ifmo.android_2015.search_song.list.AlbumRecyclerAdapter;
-import ru.ifmo.android_2015.search_song.list.AlbumSelectedListener;
 import ru.ifmo.android_2015.search_song.list.SingerSelectedListener;
 import ru.ifmo.android_2015.search_song.model.ArrayOfSongs;
 import ru.ifmo.android_2015.search_song.model.Group;
@@ -46,12 +42,14 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
     private TextView title;
     private String album_title = "";
     private Group group = new Group();
+    private  Bitmap my_b;
 
     enum DownloadState {
         DOWNLOADING(R.string.downloading),
         DONE(R.string.done),
         ERROR(R.string.error),
-        NOSONGS(R.string.no_info);
+        NOSONGS(R.string.no_info),
+        NOIMG(R.string.fuck);
 
         // ID строкового ресурса для заголовка окна прогресса
         final int titleResId;
@@ -107,9 +105,14 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
             }
             Log.w("SongAsyncTask", "We make array 4");
 
+            try {
+                my_b = getBitmap(group);
+            } catch (Exception e) {
+               state = DownloadState.NOIMG;
+            }
+
         } catch (Exception e) {
             state = DownloadState.ERROR;
-            Log.e(LOGTAG, e.getMessage());
             Log.w("SongAsyncTask", "We got exc...");
 
         }
@@ -142,21 +145,21 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
         ProgressBar pr = (ProgressBar) activity.findViewById(R.id.progress3);
         pr.setVisibility(View.INVISIBLE);
         if (group == null || state == DownloadState.NOSONGS) {
-            view.setImageResource(R.drawable.sorry);
+            view.setImageResource(R.drawable.cat1);
             return;
         }
-        if(state == DownloadState.ERROR){
-            view.setImageResource(R.drawable.sorry);
+        if(state == DownloadState.ERROR ){
+            view.setImageResource(R.drawable.cat1);
             title.setText(R.string.error);
             return;
         }
-
-        try {
-            view.setImageBitmap(getBitmap(group));
-        } catch (IOException e) {
-            title.setText("aaaaaa");
-            e.printStackTrace();
+        if(state == DownloadState.NOIMG ){
+            view.setImageResource(R.drawable.cat1);
+            title.setText(R.string.fuck);
+            return;
         }
+        view.setImageBitmap(my_b);
+
 
     }
     private Bitmap getBitmap(Group group) throws IOException {
@@ -164,13 +167,14 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
         InputStream is = null;
         Bitmap bitmap = null;
         try {
-            connection = (HttpURLConnection) (new URL("http://megalyrics.ru" + group.coverURI)).openConnection();
+            String str = "http://megalyrics.ru" + group.coverURI;
+            URLEncoder.encode(str, "utf-8");
+            connection = (HttpURLConnection) (new URL(str)).openConnection();
             is = connection.getInputStream();
             bitmap = BitmapFactory.decodeStream(is);
         } catch (Exception e) {
-            title.setText("bbbbbb");
-            ImageView view = (ImageView) activity.findViewById(R.id.imageView);
-            view.setImageResource(R.drawable.sorry);
+            ImageView view = (ImageView) activity.findViewById(R.id.album_image);
+            view.setImageResource(R.drawable.cat1);
         } finally {
             if (is != null) {
                 is.close();

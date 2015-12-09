@@ -32,7 +32,9 @@
         android:textSize="15dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -59,6 +61,8 @@
         android:textColor="#ffffff"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
 </LinearLayout>

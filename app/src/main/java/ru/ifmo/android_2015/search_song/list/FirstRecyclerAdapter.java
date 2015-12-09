@@ -31,7 +31,7 @@ public class FirstRecyclerAdapter extends RecyclerView.Adapter<FirstRecyclerAdap
 
     @Override
     public GroupsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_city, parent, false);
+        View view = layoutInflater.inflate(R.layout.item, parent, false);
         view.setOnClickListener(this);
         return new GroupsViewHolder(view);
     }

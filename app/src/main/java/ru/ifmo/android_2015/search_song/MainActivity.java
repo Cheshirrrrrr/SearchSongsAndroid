@@ -17,9 +17,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         search = (TextView) findViewById(R.id.textSearch);
+        search.setText("");
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        search = (TextView) findViewById(R.id.textSearch);
+        search.setText("");
+    }
 
     public void onSingerClicked(View view) {
         Log.v(TAG, "onSingerClicked: " + view);
@@ -36,4 +42,5 @@ public class MainActivity extends AppCompatActivity {
         song.putExtra(SongSelectedActivity.EXTRA_SONG, str);
         startActivity(song);
     }
+
 }

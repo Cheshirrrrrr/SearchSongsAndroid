@@ -24,6 +24,7 @@
         android:layout_height="match_parent"
         tools:context="project.project.ChooseGroupActivity"
         style="@style/CustomListView"
-        />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
 </LinearLayout>

@@ -11,4 +11,5 @@
     <string name="welcome">Мы готовы искать для Вас!</string>
     <string name="translation">Перевод</string>
     <string name="loading">Загрузка</string>
+    <string name="fuck">Не можем загрузить картинку</string>
 </resources>

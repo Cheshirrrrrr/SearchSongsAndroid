@@ -14,35 +14,33 @@ import ru.ifmo.android_2015.search_song.model.ArrayOfSongs;
 /**
  * Created by vorona on 29.11.15.
  */
-public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdapter.CityViewHolder>
+public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdapter.ViewHolder>
         implements View.OnClickListener {
 
     private final LayoutInflater layoutInflater;
-    private SingerSelectedListener citySelectedListener;
+    private SingerSelectedListener singerSelectedListener;
 
     public AlbumRecyclerAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
     public void setCitySelectedListener(SingerSelectedListener listener) {
-        citySelectedListener = listener;
+        singerSelectedListener = listener;
     }
 
     @Override
-    public CityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_city, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = layoutInflater.inflate(R.layout.item, parent, false);
         view.setOnClickListener(this);
-        return new CityViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CityViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         String song = ArrayOfSongs.getSong(position);
-//        Album album = ArrayOfAlbums.getAlbum(position);
         Log.w("SongAsyncTask", "We're trying to bind");
-        holder.cityNameView.setText(song);
+        holder.nNameView.setText(song);
         holder.itemView.setTag(R.id.tag, song); //TODO
-//        Log.w("SongAsyncTask", "We're trying to bind" + album.title);
     }
 
     @Override
@@ -53,18 +51,18 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
     @Override
     public void onClick(View v) {
         String song = (String) v.getTag(R.id.tag);
-        if (citySelectedListener != null && song!= null) {
-            citySelectedListener.onSingerSelected(song);
+        if (singerSelectedListener != null && song!= null) {
+            singerSelectedListener.onSingerSelected(song);
         }
     }
 
-    static class CityViewHolder extends RecyclerView.ViewHolder {
-        final TextView cityNameView;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        final TextView nNameView;
 
-        public CityViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             Log.w("SongAsyncTask", "We're trying to create holder");
-            cityNameView = (TextView) itemView.findViewById(R.id.album_name);
+            nNameView = (TextView) itemView.findViewById(R.id.album_name);
         }
     }
 }

@@ -6,10 +6,6 @@ package ru.ifmo.android_2015.search_song.model;
 public class GroupInfo {
     String id = "";
     String title = "";
-    int tracks = 0;
-    String genres [] = null;
-    String coverURI = "";
-
 
     public void setName(String title) {
         this.title = title;

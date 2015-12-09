@@ -12,6 +12,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URLEncoder;
 import java.util.Arrays;
 
 import javax.json.Json;
@@ -49,18 +50,18 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         text = (TextView) activity.findViewById(R.id.scrollText);
         translation = (TextView) activity.findViewById(R.id.scrollTranslation);
         title.setText(R.string.downloading);
-        Log.w("SongAsyncTask", "We started Async");
+        Log.w("TextAsyncTask", "We started Async");
         ArrayOfSongs.clear();
     }
 
     public void attachActivity(Activity activity) {
         this.activity = activity;
         updateView(activity);
-        Log.w("SongAsyncTask", "We've attached");
+        Log.w("TextAsyncTask", "We've attached");
     }
 
     private void updateView(Activity activity) {
-        Log.w("SongAsyncTask", "We try to update");
+        Log.w("TextAsyncTask", "We try to update");
     }
 
     @Override
@@ -75,25 +76,24 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             Log.w("TextAsyncTask", "We got groups");
             if (songs != null) {
                 if (songs[0] == null) {
-                    Log.w("SongAsyncTask", "We got empty first song");
+                    Log.w("TextAsyncTask", "We got empty first song");
                     state = DownloadState.NOSONGS;
                 } else {
                     state = DownloadState.DONE;
+                    int flag = onAmalgama(song, songs);
+
+                    if (flag >= 0 && flag < songs.length) {
+                        printInformation(group, song);
+                    }  else {
+                        state  = DownloadState.NOSONGS;
+                    }
                 }
             } else {
-                state = DownloadState.ERROR;
+                Log.w("TextAsyncTask", "We got empty first song");
+                state = DownloadState.NOSONGS;
             }
-            int flag = onAmalgama(song, songs);
-
-            if (flag >= 0 && flag < songs.length) {
-                printInformation(group, song);
-            }  else {
-                state  = DownloadState.NOSONGS;
-            }
-
 
         } catch (Exception e) {
-            Log.e(LOGTAG, e.getMessage());
             Log.w("TextAsyncTask", "We got exc...");
 
         }
@@ -130,23 +130,35 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
     final static boolean NON_IGNORE_THE = false;
 
     public static String[] amalgamaTranslations(String groupName) throws IOException, InterruptedException {
-        groupName = amalgamaFormat(groupName, IGNORE_THE, "_");
-//        Thread.sleep(500);
-        Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + groupName.charAt(0) +"/" + groupName + "/").get();
-        Object listOfUl[] = html.body().getElementById("songs_nav").select("ul").toArray();
-        Document translationList = Jsoup.parse(listOfUl[1].toString());
-        Object listOfObjTranslations[] = translationList.select("li").select("li").toArray();
+        Log.w("TextAsyncTask", "We in amalgamaTransl...");
+        try {
+            groupName = amalgamaFormat(groupName, IGNORE_THE, "_");
+            Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + URLEncoder.encode(String.valueOf(groupName.charAt(0)), "utf-8") +"/" + URLEncoder.encode(groupName, "utf-8") + "/").get();
+            Log.w("TextAsyncTask", "We in amalgamaTransl1...");
 
-        String listOfTranslation[] = new String[listOfObjTranslations.length];
-        for (int i = 0; i < listOfObjTranslations.length; i++) {
-            listOfTranslation[i] = Jsoup.parse(listOfObjTranslations[i].toString()).text();
-            listOfTranslation[i] = amalgamaFormat(listOfTranslation[i], NON_IGNORE_THE, "_");
-            System.out.println(listOfTranslation[i]);
+            Object listOfUl[] = html.body().getElementById("songs_nav").select("ul").toArray();
+            Log.w("TextAsyncTask", "We in amalgamaTransl1,5...");
+            Document translationList = Jsoup.parse(listOfUl[1].toString());
+            Log.w("TextAsyncTask", "We in amalgamaTransl2...");
+            Object listOfObjTranslations[] = translationList.select("li").select("li").toArray();
+            Log.w("TextAsyncTask", "We in amalgamaTransl3...");
+            String listOfTranslation[] = new String[listOfObjTranslations.length];
+            for (int i = 0; i < listOfObjTranslations.length; i++) {
+                listOfTranslation[i] = Jsoup.parse(listOfObjTranslations[i].toString()).text();
+                listOfTranslation[i] = amalgamaFormat(listOfTranslation[i], NON_IGNORE_THE, "_");
+                System.out.println(listOfTranslation[i]);
+                Log.w("TextAsyncTask", "We in amalgamaTransl4...");
+            }
+            Log.w("TextAsyncTask", "We out amalgamaTransl...");
+            return listOfTranslation;
+
+        } catch (Exception ignored) {
         }
-        return listOfTranslation;
+        return null;
     }
 
     public static String amalgamaFormat(String oldName, boolean flag, String divider) {
+        Log.w("TextAsyncTask", "We in amalgamaFormat...");
         String name[] = oldName.split(" ");
         String newName = "";
         for (int i = 0; i < name.length; i++) {
@@ -159,15 +171,18 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             }
             newName = newName.concat(name[i]);
         }
+        Log.w("TextAsyncTask", "We out amalgamaFormat...");
         return newName;
     }
 
     public static int onAmalgama(String trackName, String[] listOfTranslations) {
+        Log.w("TextAsyncTask", "We in onAmalgama...");
         trackName = amalgamaFormat(trackName, NON_IGNORE_THE,"_");
          return Arrays.binarySearch(listOfTranslations, trackName);
     }
 
     public static void printInformation(String artist, String song) throws IOException {
+        Log.w("TextAsyncTask", "We in printInformation...");
         artist = amalgamaFormat(artist, IGNORE_THE, "_");
         song = amalgamaFormat(song, NON_IGNORE_THE, "_");
 
@@ -187,7 +202,6 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         }
         textOfSong = txt;
         translOfSong = transl;
-//        printTextByClass(html, "translate");
     }
 
 

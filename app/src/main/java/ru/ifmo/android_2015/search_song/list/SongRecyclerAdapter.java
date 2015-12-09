@@ -15,7 +15,7 @@ import ru.ifmo.android_2015.search_song.model.ArrayOfAlbums;
 /**
  * Created by vorona on 01.12.15.
  */
-public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapter.CityViewHolder>
+public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapter.ViewHolder>
         implements View.OnClickListener {
 
     private final LayoutInflater layoutInflater;
@@ -30,17 +30,17 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
     }
 
     @Override
-    public CityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_city, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = layoutInflater.inflate(R.layout.item, parent, false);
         view.setOnClickListener(this);
-        return new CityViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CityViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Album album = ArrayOfAlbums.getAlbum(position);
         Log.w("TextAsyncTask", "We're trying to bind");
-        holder.cityNameView.setText(album.title);
+        holder.sNameView.setText(album.title);
         holder.itemView.setTag(R.id.tag, album);
         Log.w("TextAsyncTask", "We're trying to bind" + album.title);
     }
@@ -58,13 +58,13 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
         }
     }
 
-    static class CityViewHolder extends RecyclerView.ViewHolder {
-        final TextView cityNameView;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        final TextView sNameView;
 
-        public CityViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             Log.w("TextAsyncTask", "We're trying to create holder");
-            cityNameView = (TextView) itemView.findViewById(R.id.txtName);
+            sNameView = (TextView) itemView.findViewById(R.id.txtName);
         }
     }
 }
