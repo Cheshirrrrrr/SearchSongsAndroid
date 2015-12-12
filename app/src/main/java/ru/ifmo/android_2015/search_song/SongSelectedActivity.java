@@ -9,19 +9,22 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
+import ru.ifmo.android_2015.search_song.list.SecondSelectedListener;
 import ru.ifmo.android_2015.search_song.list.SingerRecyclerAdapter;
 import ru.ifmo.android_2015.search_song.list.RecylcerDividersDecorator;
 import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
+import ru.ifmo.android_2015.search_song.model.Tracks;
 
 /**
  * Created by vorona on 24.11.15.
  */
-public class SongSelectedActivity extends AppCompatActivity implements SongSelectedListener {
+public class SongSelectedActivity extends AppCompatActivity implements SecondSelectedListener {
     public static final String EXTRA_SONG = "song";
 
     private String song;
     private TextView name;
-    private RecyclerView recyclerView;
+
+    private BySongAsyncTask downloadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,16 @@ public class SongSelectedActivity extends AppCompatActivity implements SongSelec
         }
         name.setText(song);
 
-        recyclerView = (RecyclerView) findViewById(R.id.list2);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
-        SingerRecyclerAdapter adapter = new SingerRecyclerAdapter(this);
-//        adapter.setSingerSelectedListener(this);
-        recyclerView.setAdapter(adapter);
+        if (savedInstanceState != null) {
+            downloadTask = (BySongAsyncTask) getLastCustomNonConfigurationInstance();
+        }
+        if (downloadTask == null) {
+            downloadTask = new BySongAsyncTask(this);
+            downloadTask.execute(song);
+        } else {
+            downloadTask.attachActivity(this);
+        }
+
     }
 
     @Override
@@ -51,42 +58,24 @@ public class SongSelectedActivity extends AppCompatActivity implements SongSelec
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
-//        bundle.putString("TITLE", camTitle.getText().toString());
-//        bundle.putString("LAT", lat.getText().toString());
-//        bundle.putString("LON", lon.getText().toString());
-//        Drawable temp = camImageView.getDrawable();
-//        if (temp != null) {
-//            bundle.putParcelable("IMAGE", ((BitmapDrawable) temp).getBitmap());
-//        }
         super.onSaveInstanceState(bundle);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle bundle) {
-//        if (bundle != null) {
-//            camTitle.setText(bundle.getString("TITLE"));
-//            lat.setText(bundle.getString("LAT"));
-//            lon.setText(bundle.getString("LON"));
-//            if (downloadTask.getState() == AlbumsAsyncTask.DownloadState.DOWNLOADING) {
-//                progressView.setVisibility(View.VISIBLE);
-//            } else {
-//                Bitmap bitmap = bundle.getParcelable("IMAGE");
-//                camImageView.setImageBitmap(bitmap);
-//                progressView.setVisibility(View.INVISIBLE);
-//            }
-//        }
+
         super.onRestoreInstanceState(bundle);
     }
 
-//    @Override
-    public void onSongSelected(String song) {
+    private static final String TAG = "SingerSelected";
+
+    @Override
+    public void onSongSelected(Tracks track) {
         Log.v(TAG, "onTextClicked: ");
         Intent text = new Intent(this, TextSelectedActivity.class);
-//        String str = album.title;
-        text.putExtra(TextSelectedActivity.EXTRA_SONG, song);
-//        text.putExtra(TextSelectedActivity.EXTRA_SINGER, );
+        text.putExtra(TextSelectedActivity.EXTRA_SONG, track.title);
+        text.putExtra(TextSelectedActivity.EXTRA_SINGER, track.artist);
+        text.putExtra(TextSelectedActivity.EXTRA_SOURCE, track.source);
         startActivity(text);
     }
-
-    private static final String TAG = "SingerSelected";
 }

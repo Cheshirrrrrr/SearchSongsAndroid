@@ -96,6 +96,7 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
         Intent text = new Intent(this, TextSelectedActivity.class);
         text.putExtra(TextSelectedActivity.EXTRA_SONG, song);
         text.putExtra(TextSelectedActivity.EXTRA_SINGER, singer);
+        text.putExtra(TextSelectedActivity.EXTRA_SOURCE, "fuck"); //TODO source
         startActivity(text);
     }
 }

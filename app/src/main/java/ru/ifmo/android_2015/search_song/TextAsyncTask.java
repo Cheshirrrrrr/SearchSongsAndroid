@@ -19,6 +19,7 @@ import javax.json.Json;
 import javax.json.JsonReader;
 
 import ru.ifmo.android_2015.search_song.model.ArrayOfSongs;
+import ru.ifmo.android_2015.search_song.model.Tracks;
 
 /**
  * Created by vorona on 01.12.15.
@@ -29,7 +30,8 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
     private DownloadState state;
     private TextView title, text, translation;
     private static String textOfSong  = "";
-    private static String translOfSong = "", group = "", song = "";
+    private static String translOfSong = "", group = "", song = "", source = "";
+    private  boolean trans = true;
     enum DownloadState {
         DOWNLOADING(R.string.downloading),
         DONE(R.string.done),
@@ -69,8 +71,15 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         try {
             song = params[0];
             group = params[1];
+            source = params[2];
             Log.w("TextAsyncTask", "We went into do..." + params[0]);
             state = DownloadState.DOWNLOADING;
+
+            if (song.charAt(0) >= 'А' && song.charAt(0) <= 'Я') {
+                textOfSong = originalFromMegalyrics(source);
+                trans = false;
+                return null;
+            }
             String[] songs = amalgamaTranslations(group);
 
             Log.w("TextAsyncTask", "We got groups");
@@ -97,6 +106,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             Log.w("TextAsyncTask", "We got exc...");
 
         }
+
         return null;
     }
 
@@ -115,6 +125,19 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         }
         if(state == DownloadState.ERROR){
             title.setText(R.string.error);
+            text.setVisibility(View.INVISIBLE);
+            translation.setVisibility(View.INVISIBLE);
+            activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
+            return;
+        }
+        if (!trans) {
+            title.setText(group + " - " + song);
+            text.setText("Text");
+            if (!textOfSong.equals("")) text.setText(textOfSong);
+            translation.setHeight(0);
+            translation.setVisibility(View.INVISIBLE);
+            activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
+            return;
         }
         else {
             title.setText(group + " - " + song);
@@ -202,6 +225,14 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         }
         textOfSong = txt;
         translOfSong = transl;
+    }
+
+    private static String originalFromMegalyrics(String songSource) throws IOException {
+
+        Document html = Jsoup.connect(songSource).get();
+        String text = html.getElementsByClass("text_inner").html().replace("<br>", "$$$");
+        String txt = Jsoup.parse(text).text().replace("$$$", "\n");
+        return txt;
     }
 
 

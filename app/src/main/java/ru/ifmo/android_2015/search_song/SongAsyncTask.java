@@ -20,7 +20,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -138,7 +137,7 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
         AlbumRecyclerAdapter adapter = new AlbumRecyclerAdapter(activity);
-        adapter.setCitySelectedListener((SingerSelectedListener) activity);
+        adapter.setSelectedListener((SingerSelectedListener) activity);
         recyclerView.setAdapter(adapter);
 
         ImageView view = (ImageView) activity.findViewById(R.id.album_image);
@@ -187,12 +186,12 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
     }
 
 
-    private static Tracks[] getSongs(Group group) throws IOException {
-        Log.w("SongAsyncTask", "We in getJson");
+    static Tracks[] getSongs(Group group) throws IOException {
+
         Document html = Jsoup.connect(group.id).get();
         Elements songs = html.getElementsByClass("st-title");
         System.out.println(songs);
-        Tracks[] tracks = new Tracks[songs.size() - 1];
+        Tracks [] tracks = new Tracks[songs.size() - 1];
         int i = -1;
         for (Element song :songs) {
             if(i == -1) {
@@ -201,11 +200,13 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
             }
             tracks[i] = new Tracks();
             tracks[i].title = song.text();
+            tracks[i].artist = group.title;
             tracks[i].source = "http://megalyrics.ru/" + song.select("a").attr("href");
             i++;
         }
         group.bioURI = html.getElementsByClass("text").select("a").first().absUrl("href");
         return tracks;
+
     }
 
 }

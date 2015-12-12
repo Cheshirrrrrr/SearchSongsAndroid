@@ -6,4 +6,6 @@ package ru.ifmo.android_2015.search_song.model;
 public class Tracks {
     public String title = "";
     public String source = "";
+    public String length = "";
+    public String artist = "";
 }

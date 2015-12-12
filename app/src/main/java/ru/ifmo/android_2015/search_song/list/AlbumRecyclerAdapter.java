@@ -24,7 +24,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setCitySelectedListener(SingerSelectedListener listener) {
+    public void setSelectedListener(SingerSelectedListener listener) {
         singerSelectedListener = listener;
     }
 

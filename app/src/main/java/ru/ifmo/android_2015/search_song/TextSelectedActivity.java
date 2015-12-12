@@ -13,8 +13,9 @@ public class TextSelectedActivity extends AppCompatActivity{
 
     public static final String EXTRA_SONG = "song";
     public static final String EXTRA_SINGER = "singer";
+    public static final String EXTRA_SOURCE = "source";
 
-    private String song, singer;
+    private String song, singer, source;
     private TextView name;
     private TextAsyncTask downloadTask;
 
@@ -25,6 +26,7 @@ public class TextSelectedActivity extends AppCompatActivity{
         setContentView(R.layout.activity_text_song);
         song = getIntent().getStringExtra(EXTRA_SONG);
         singer = getIntent().getStringExtra(EXTRA_SINGER);
+        source = getIntent().getStringExtra(EXTRA_SOURCE);
         name = (TextView) findViewById(R.id.txtName);
         TextView textview= (TextView) findViewById(R.id.scrollText);
         textview.setMovementMethod(new ScrollingMovementMethod());
@@ -43,7 +45,7 @@ public class TextSelectedActivity extends AppCompatActivity{
         }
         if (downloadTask == null) {
             downloadTask = new TextAsyncTask(this);
-            downloadTask.execute(song, singer);
+            downloadTask.execute(song, singer, source);
         } else {
             downloadTask.attachActivity(this);
         }
@@ -57,30 +59,11 @@ public class TextSelectedActivity extends AppCompatActivity{
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
-//        bundle.putString("TITLE", camTitle.getText().toString());
-//        bundle.putString("LAT", lat.getText().toString());
-//        bundle.putString("LON", lon.getText().toString());
-//        Drawable temp = camImageView.getDrawable();
-//        if (temp != null) {
-//            bundle.putParcelable("IMAGE", ((BitmapDrawable) temp).getBitmap());
-//        }
         super.onSaveInstanceState(bundle);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle bundle) {
-//        if (bundle != null) {
-//            camTitle.setText(bundle.getString("TITLE"));
-//            lat.setText(bundle.getString("LAT"));
-//            lon.setText(bundle.getString("LON"));
-//            if (downloadTask.getState() == AlbumsAsyncTask.DownloadState.DOWNLOADING) {
-//                progressView.setVisibility(View.VISIBLE);
-//            } else {
-//                Bitmap bitmap = bundle.getParcelable("IMAGE");
-//                camImageView.setImageBitmap(bitmap);
-//                progressView.setVisibility(View.INVISIBLE);
-//            }
-//        }
         super.onRestoreInstanceState(bundle);
     }
 

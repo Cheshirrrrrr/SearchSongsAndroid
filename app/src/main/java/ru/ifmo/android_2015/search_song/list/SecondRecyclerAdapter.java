@@ -9,24 +9,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.R;
-import ru.ifmo.android_2015.search_song.model.ArrayOfSingers;
-import ru.ifmo.android_2015.search_song.model.Group;
+import ru.ifmo.android_2015.search_song.model.ArrayOfSongs2;
+import ru.ifmo.android_2015.search_song.model.Tracks;
 
 /**
- * Created by vorona on 02.12.15.
+ * Created by vorona on 12.12.15.
  */
-public class FirstRecyclerAdapter extends RecyclerView.Adapter<FirstRecyclerAdapter.GroupsViewHolder>
+public class SecondRecyclerAdapter extends RecyclerView.Adapter<SecondRecyclerAdapter.GroupsViewHolder>
         implements View.OnClickListener {
 
     private final LayoutInflater layoutInflater;
-    private FirstSelectedListener singerSelectedListener;
+    private SecondSelectedListener songSelectedListener;
 
-    public FirstRecyclerAdapter(Context context) {
+    public SecondRecyclerAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setSingerSelectedListener(FirstSelectedListener listener) {
-        singerSelectedListener = listener;
+    public void setSongSelectedListener(SecondSelectedListener listener) {
+        songSelectedListener = listener;
     }
 
     @Override
@@ -38,32 +38,32 @@ public class FirstRecyclerAdapter extends RecyclerView.Adapter<FirstRecyclerAdap
 
     @Override
     public void onBindViewHolder(GroupsViewHolder holder, int position) {
-        Group group = ArrayOfSingers.getGroup(position);
+        Tracks track = ArrayOfSongs2.getSong(position);
         Log.w("SingerAsyncTask", "We're trying to bind");
-        holder.groupName.setText(group.title);
-        holder.itemView.setTag(R.id.tag, group); //TODO
+        holder.SongName.setText(track.artist + " - " + track.title );
+        holder.itemView.setTag(R.id.tag, track); //TODO
     }
 
     @Override
     public int getItemCount() {
-        return ArrayOfSingers.getCount();
+        return ArrayOfSongs2.getCount();
     }
 
     @Override
     public void onClick(View v) {
-        Group group = (Group) v.getTag(R.id.tag);
-        if (singerSelectedListener != null) {
-            singerSelectedListener.onSingerSelected(group);
+        Tracks track = (Tracks) v.getTag(R.id.tag);
+        if (songSelectedListener != null) {
+            songSelectedListener.onSongSelected(track);
         }
     }
 
     static class GroupsViewHolder extends RecyclerView.ViewHolder {
-        TextView groupName;
+        TextView SongName;
 
         public GroupsViewHolder(View itemView) {
             super(itemView);
-            Log.w("SingerAsyncTask", "We're trying to create holder" + R.id.txtWritten);
-            groupName = (TextView) itemView.findViewById(R.id.album_name);
+            Log.w("SingerAsyncTask", "We're trying to create holder" + R.id.txtSongName);
+            SongName = (TextView) itemView.findViewById(R.id.album_name);
         }
     }
 }

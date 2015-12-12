@@ -29,7 +29,6 @@ public class ChooseGroupActivity extends AppCompatActivity implements FirstSelec
         setContentView(R.layout.activity_choose_singer);
         singer = getIntent().getStringExtra(EXTRA_SINGER);
         name = (TextView) findViewById(R.id.txtWritten);
-//        singer = "abba";
 
         if (singer == null) {
             Log.w(TAG, "object not provided in extra parameter: " + EXTRA_SINGER);
@@ -83,7 +82,6 @@ public class ChooseGroupActivity extends AppCompatActivity implements FirstSelec
         gr.putExtra(AlbumSelectedActivity.EXTRA_COVER, group.coverURI);
         gr.putExtra(AlbumSelectedActivity.EXTRA_RELEVANT, group.relevant);
         gr.putExtra(AlbumSelectedActivity.EXTRA_BIO, group.bioURI);
-//        gr.putExtra(AlbumSelectedActivity.EXTRA_GROUP, group);
         startActivity(gr);
 
     }
