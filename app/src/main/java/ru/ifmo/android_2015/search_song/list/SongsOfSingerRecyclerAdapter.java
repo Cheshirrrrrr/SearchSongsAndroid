@@ -9,24 +9,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.R;
-import ru.ifmo.android_2015.search_song.model.Album;
-import ru.ifmo.android_2015.search_song.model.ArrayOfAlbums;
+import ru.ifmo.android_2015.search_song.SongsOfSingerAsyncTask;
 
 /**
- * Created by vorona on 01.12.15.
+ * Created by vorona on 29.11.15.
  */
-public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapter.ViewHolder>
+public class SongsOfSingerRecyclerAdapter extends RecyclerView.Adapter<SongsOfSingerRecyclerAdapter.ViewHolder>
         implements View.OnClickListener {
 
     private final LayoutInflater layoutInflater;
-    private SongSelectedListener albumSelectedListener;
+    private SongSelectedListener songSelectedListener;
 
-    public SongRecyclerAdapter(Context context) {
+    public SongsOfSingerRecyclerAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setSongRecyclerAdapter(SongSelectedListener listener) {
-        albumSelectedListener = listener;
+    public void setSelectedListener(SongSelectedListener listener) {
+        songSelectedListener = listener;
     }
 
     @Override
@@ -38,34 +37,32 @@ public class SongRecyclerAdapter extends RecyclerView.Adapter<SongRecyclerAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Album album = ArrayOfAlbums.getAlbum(position);
-        Log.w("TextAsyncTask", "We're trying to bind");
-        holder.sNameView.setText(album.title);
-        holder.itemView.setTag(R.id.tag, album);
-        Log.w("TextAsyncTask", "We're trying to bind" + album.title);
+        String song = SongsOfSingerAsyncTask.getSongInPosition(position);
+        Log.w("SongAsyncTask", "We're trying to bind");
+        holder.nNameView.setText(song);
+        holder.itemView.setTag(R.id.tag, song); //TODO
     }
 
     @Override
     public int getItemCount() {
-        return ArrayOfAlbums.getCount();
+        return SongsOfSingerAsyncTask.numberOfSongs();
     }
 
     @Override
     public void onClick(View v) {
         String song = (String) v.getTag(R.id.tag);
-        if (albumSelectedListener != null && song!= null) {
-            albumSelectedListener.onSongSelected(song);
+        if (songSelectedListener != null && song!= null) {
+            songSelectedListener.onSongSelected(song);
         }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView sNameView;
+        final TextView nNameView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            Log.w("TextAsyncTask", "We're trying to create holder");
-            sNameView = (TextView) itemView.findViewById(R.id.txtName);
+            Log.w("SongAsyncTask", "We're trying to create holder");
+            nNameView = (TextView) itemView.findViewById(R.id.album_name);
         }
     }
 }
-

@@ -25,16 +25,15 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import ru.ifmo.android_2015.search_song.list.RecylcerDividersDecorator;
-import ru.ifmo.android_2015.search_song.list.AlbumRecyclerAdapter;
-import ru.ifmo.android_2015.search_song.list.SingerSelectedListener;
-import ru.ifmo.android_2015.search_song.model.ArrayOfSongs;
+import ru.ifmo.android_2015.search_song.list.SongsOfSingerRecyclerAdapter;
+import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
 import ru.ifmo.android_2015.search_song.model.Group;
-import ru.ifmo.android_2015.search_song.model.Tracks;
+import ru.ifmo.android_2015.search_song.model.Track;
 
 /**
  * Created by vorona on 29.11.15.
  */
-public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
+public class SongsOfSingerAsyncTask extends AsyncTask<Group, Void, Void> {
     private static final String LOGTAG = "Downloading";
     private Activity activity;
     private DownloadState state;
@@ -42,6 +41,7 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
     private String album_title = "";
     private Group group = new Group();
     private  Bitmap my_b;
+    public static Track[] songs;
 
     enum DownloadState {
         DOWNLOADING(R.string.downloading),
@@ -58,22 +58,31 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
         }
     }
 
-    public SongAsyncTask(Activity activity) {
+    public static String getSongInPosition(int position) {
+        return songs[position].title;
+    }
+
+    public static int numberOfSongs() {
+        return songs.length;
+    }
+
+
+    public SongsOfSingerAsyncTask(Activity activity) {
         this.activity = activity;
         title = (TextView) activity.findViewById(R.id.album_name);
         title.setText(R.string.downloading);
-        Log.w("SongAsyncTask", "We started Async");
-        ArrayOfSongs.clear();
+        Log.w("SongsOfSingerAsyncTask", "We started Async");
+        songs = new Track[0];
     }
 
     public void attachActivity(Activity activity) {
         this.activity = activity;
         updateView(activity);
-        Log.w("SongAsyncTask", "We've attached");
+        Log.w("SongsOfSingerAsyncTask", "We've attached");
     }
 
     private void updateView(Activity activity) {
-        Log.w("SongAsyncTask", "We try to update");
+        Log.w("SongsOfSingerAsyncTask", "We try to update");
     }
 
     @Override
@@ -81,14 +90,14 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
         album_title = params[0].title;
         group = params[0];
         try {
-            Log.w("SongAsyncTask", "We went into do..." + params[0]);
+            Log.w("SongsOfSingerAsyncTask", "We went into do..." + params[0]);
             state = DownloadState.DOWNLOADING;
-            Tracks[] songs = getSongs(params[0]);
+            songs = getSongs(params[0]);
 
-            Log.w("SongAsyncTask", "We got groups");
+            Log.w("SongsOfSingerAsyncTask", "We got groups");
             if (songs != null) {
                 if (songs[0] == null) {
-                    Log.w("SongAsyncTask", "We got empty first song");
+                    Log.w("SongsOfSingerAsyncTask", "We got empty first song");
                     state = DownloadState.NOSONGS;
                 } else {
                     state = DownloadState.DONE;
@@ -96,13 +105,6 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
             } else {
                 state = DownloadState.ERROR;
             }
-            Log.w("SongAsyncTask", "We make array");
-            for (int i = 0; i < songs.length; i++) {
-                Log.w("SongAsyncTask", "We make array 1");
-                ArrayOfSongs.addSong(songs[i].title);
-                Log.w("SongAsyncTask", "We make array 2");
-            }
-            Log.w("SongAsyncTask", "We make array 4");
 
             try {
                 my_b = getBitmap(group);
@@ -112,7 +114,7 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
 
         } catch (Exception e) {
             state = DownloadState.ERROR;
-            Log.w("SongAsyncTask", "We got exc...");
+            Log.w("SongsOfSingerAsyncTask", "We got exc...");
 
         }
         return null;
@@ -122,7 +124,7 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
     protected void onPostExecute(Void voi) {
 
         title = (TextView) activity.findViewById(R.id.album_name);
-        Log.w("SongAsyncTask", "We in Post...");
+        Log.w("SongsOfSingerAsyncTask", "We in Post...");
         if ( state == DownloadState.NOSONGS) {
             title.setText(R.string.no_info);
             return;
@@ -136,8 +138,8 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
         recyclerView = (RecyclerView) activity.findViewById(R.id.list3);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
-        AlbumRecyclerAdapter adapter = new AlbumRecyclerAdapter(activity);
-        adapter.setSelectedListener((SingerSelectedListener) activity);
+        SongsOfSingerRecyclerAdapter adapter = new SongsOfSingerRecyclerAdapter(activity);
+        adapter.setSelectedListener((SongSelectedListener) activity);
         recyclerView.setAdapter(adapter);
 
         ImageView view = (ImageView) activity.findViewById(R.id.album_image);
@@ -186,19 +188,19 @@ public class SongAsyncTask extends AsyncTask<Group, Void, Void> {
     }
 
 
-    static Tracks[] getSongs(Group group) throws IOException {
+    static Track[] getSongs(Group group) throws IOException {
 
         Document html = Jsoup.connect(group.id).get();
         Elements songs = html.getElementsByClass("st-title");
         System.out.println(songs);
-        Tracks [] tracks = new Tracks[songs.size() - 1];
+        Track[] tracks = new Track[songs.size() - 1];
         int i = -1;
         for (Element song :songs) {
             if(i == -1) {
                 i++;
                 continue;
             }
-            tracks[i] = new Tracks();
+            tracks[i] = new Track();
             tracks[i].title = song.text();
             tracks[i].artist = group.title;
             tracks[i].source = "http://megalyrics.ru/" + song.select("a").attr("href");

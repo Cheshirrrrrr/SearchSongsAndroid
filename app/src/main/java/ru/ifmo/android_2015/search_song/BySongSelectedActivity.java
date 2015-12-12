@@ -1,24 +1,18 @@
 package ru.ifmo.android_2015.search_song;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.list.SecondSelectedListener;
-import ru.ifmo.android_2015.search_song.list.SingerRecyclerAdapter;
-import ru.ifmo.android_2015.search_song.list.RecylcerDividersDecorator;
-import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
-import ru.ifmo.android_2015.search_song.model.Tracks;
+import ru.ifmo.android_2015.search_song.model.Track;
 
 /**
  * Created by vorona on 24.11.15.
  */
-public class SongSelectedActivity extends AppCompatActivity implements SecondSelectedListener {
+public class BySongSelectedActivity extends AppCompatActivity implements SecondSelectedListener {
     public static final String EXTRA_SONG = "song";
 
     private String song;
@@ -67,10 +61,10 @@ public class SongSelectedActivity extends AppCompatActivity implements SecondSel
         super.onRestoreInstanceState(bundle);
     }
 
-    private static final String TAG = "SingerSelected";
+    private static final String TAG = "BySongSelectedActivity";
 
     @Override
-    public void onSongSelected(Tracks track) {
+    public void onSongSelected(Track track) {
         Log.v(TAG, "onTextClicked: ");
         Intent text = new Intent(this, TextSelectedActivity.class);
         text.putExtra(TextSelectedActivity.EXTRA_SONG, track.title);

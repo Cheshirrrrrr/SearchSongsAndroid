@@ -2,12 +2,12 @@ package ru.ifmo.android_2015.search_song;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.list.FirstSelectedListener;
+import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
 import ru.ifmo.android_2015.search_song.model.Group;
 
 /**
@@ -20,7 +20,7 @@ public class ChooseGroupActivity extends AppCompatActivity implements FirstSelec
     private String singer;
     private TextView name;
 
-    private SingerAsyncTask downloadTask;
+    private ChooseGroupAsyncTask downloadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +37,10 @@ public class ChooseGroupActivity extends AppCompatActivity implements FirstSelec
         name.setText(singer);
 
         if (savedInstanceState != null) {
-            downloadTask = (SingerAsyncTask) getLastCustomNonConfigurationInstance();
+            downloadTask = (ChooseGroupAsyncTask) getLastCustomNonConfigurationInstance();
         }
         if (downloadTask == null) {
-            downloadTask = new SingerAsyncTask(this);
+            downloadTask = new ChooseGroupAsyncTask(this);
             downloadTask.execute(singer);
         } else {
             downloadTask.attachActivity(this);
@@ -75,13 +75,13 @@ public class ChooseGroupActivity extends AppCompatActivity implements FirstSelec
     @Override
     public void onSingerSelected(Group group) {
         Log.v(TAG, "onAlbumClicked: ");
-        Intent gr = new Intent(this, AlbumSelectedActivity.class);
-        gr.putExtra(AlbumSelectedActivity.EXTRA_ID, group.id);
-        gr.putExtra(AlbumSelectedActivity.EXTRA_ALBUM, "asdf");
-        gr.putExtra(AlbumSelectedActivity.EXTRA_TITLE, group.title);
-        gr.putExtra(AlbumSelectedActivity.EXTRA_COVER, group.coverURI);
-        gr.putExtra(AlbumSelectedActivity.EXTRA_RELEVANT, group.relevant);
-        gr.putExtra(AlbumSelectedActivity.EXTRA_BIO, group.bioURI);
+        Intent gr = new Intent(this, SongsOfSingerActivity.class);
+        gr.putExtra(SongsOfSingerActivity.EXTRA_ID, group.id);
+        gr.putExtra(SongsOfSingerActivity.EXTRA_ALBUM, "asdf");
+        gr.putExtra(SongsOfSingerActivity.EXTRA_TITLE, group.title);
+        gr.putExtra(SongsOfSingerActivity.EXTRA_COVER, group.coverURI);
+        gr.putExtra(SongsOfSingerActivity.EXTRA_RELEVANT, group.relevant);
+        gr.putExtra(SongsOfSingerActivity.EXTRA_BIO, group.bioURI);
         startActivity(gr);
 
     }

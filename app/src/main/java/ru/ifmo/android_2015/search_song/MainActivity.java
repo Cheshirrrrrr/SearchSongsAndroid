@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSongClicked(View view) {
         Log.v(TAG, "onSongClicked: ");
-        Intent song = new Intent(this, SongSelectedActivity.class);
+        Intent song = new Intent(this, BySongSelectedActivity.class);
         String str = search.getText().toString();
-        song.putExtra(SongSelectedActivity.EXTRA_SONG, str);
+        song.putExtra(BySongSelectedActivity.EXTRA_SONG, str);
         startActivity(song);
     }
 

@@ -6,13 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import ru.ifmo.android_2015.search_song.list.SingerSelectedListener;
+import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
 import ru.ifmo.android_2015.search_song.model.Group;
 
 /**
  * Created by vorona on 24.11.15.
  */
-public class AlbumSelectedActivity extends AppCompatActivity implements SingerSelectedListener {
+public class SongsOfSingerActivity extends AppCompatActivity implements SongSelectedListener {
 
 
     public static final String EXTRA_ID = "id";
@@ -26,7 +26,7 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
 
     private String album, singer, cover, rel, bio;
     private TextView name;
-    private SongAsyncTask downloadTask;
+    private SongsOfSingerAsyncTask downloadTask;
     private  String id;
     private  Group gr = new Group();
 
@@ -53,10 +53,10 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
         name.setText(album);
 
         if (savedInstanceState != null) {
-            downloadTask = (SongAsyncTask) getLastCustomNonConfigurationInstance();
+            downloadTask = (SongsOfSingerAsyncTask) getLastCustomNonConfigurationInstance();
         }
         if (downloadTask == null) {
-            downloadTask = new SongAsyncTask(this);
+            downloadTask = new SongsOfSingerAsyncTask(this);
             gr.id = id;
             gr.bioURI = bio;
             gr.relevant = rel;
@@ -88,10 +88,10 @@ public class AlbumSelectedActivity extends AppCompatActivity implements SingerSe
         super.onRestoreInstanceState(bundle);
     }
 
-    private static final String TAG = "AlbumSelected";
+    private static final String TAG = "SongSelected";
 
     @Override
-    public void onSingerSelected(String song) {
+    public void onSongSelected(String song) {
         Log.v(TAG, "onTextClicked: ");
         Intent text = new Intent(this, TextSelectedActivity.class);
         text.putExtra(TextSelectedActivity.EXTRA_SONG, song);

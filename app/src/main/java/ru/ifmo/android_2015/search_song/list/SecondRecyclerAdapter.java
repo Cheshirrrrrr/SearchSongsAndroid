@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import ru.ifmo.android_2015.search_song.BySongAsyncTask;
 import ru.ifmo.android_2015.search_song.R;
-import ru.ifmo.android_2015.search_song.model.ArrayOfSongs2;
-import ru.ifmo.android_2015.search_song.model.Tracks;
+import ru.ifmo.android_2015.search_song.model.Track;
 
 /**
  * Created by vorona on 12.12.15.
@@ -38,7 +38,7 @@ public class SecondRecyclerAdapter extends RecyclerView.Adapter<SecondRecyclerAd
 
     @Override
     public void onBindViewHolder(GroupsViewHolder holder, int position) {
-        Tracks track = ArrayOfSongs2.getSong(position);
+        Track track = BySongAsyncTask.getTrackInPosition(position);
         Log.w("SingerAsyncTask", "We're trying to bind");
         holder.SongName.setText(track.artist + " - " + track.title );
         holder.itemView.setTag(R.id.tag, track); //TODO
@@ -46,12 +46,12 @@ public class SecondRecyclerAdapter extends RecyclerView.Adapter<SecondRecyclerAd
 
     @Override
     public int getItemCount() {
-        return ArrayOfSongs2.getCount();
+        return BySongAsyncTask.numberOfTracks();
     }
 
     @Override
     public void onClick(View v) {
-        Tracks track = (Tracks) v.getTag(R.id.tag);
+        Track track = (Track) v.getTag(R.id.tag);
         if (songSelectedListener != null) {
             songSelectedListener.onSongSelected(track);
         }

@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import ru.ifmo.android_2015.search_song.ChooseGroupAsyncTask;
 import ru.ifmo.android_2015.search_song.R;
-import ru.ifmo.android_2015.search_song.model.ArrayOfSingers;
 import ru.ifmo.android_2015.search_song.model.Group;
 
 /**
  * Created by vorona on 02.12.15.
  */
-public class FirstRecyclerAdapter extends RecyclerView.Adapter<FirstRecyclerAdapter.GroupsViewHolder>
+public class FirstRecyclerAdapter<T> extends RecyclerView.Adapter<FirstRecyclerAdapter.GroupsViewHolder>
         implements View.OnClickListener {
 
     private final LayoutInflater layoutInflater;
@@ -38,7 +38,7 @@ public class FirstRecyclerAdapter extends RecyclerView.Adapter<FirstRecyclerAdap
 
     @Override
     public void onBindViewHolder(GroupsViewHolder holder, int position) {
-        Group group = ArrayOfSingers.getGroup(position);
+        Group group = ChooseGroupAsyncTask.getGroupInPosition(position);
         Log.w("SingerAsyncTask", "We're trying to bind");
         holder.groupName.setText(group.title);
         holder.itemView.setTag(R.id.tag, group); //TODO
@@ -46,7 +46,7 @@ public class FirstRecyclerAdapter extends RecyclerView.Adapter<FirstRecyclerAdap
 
     @Override
     public int getItemCount() {
-        return ArrayOfSingers.getCount();
+        return ChooseGroupAsyncTask.numberOfGroups();
     }
 
     @Override

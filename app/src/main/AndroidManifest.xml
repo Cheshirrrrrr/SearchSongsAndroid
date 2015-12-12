@@ -17,11 +17,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="ru.ifmo.android_2015.search_song.SingerSelectedActivity"
+        <activity android:name="ru.ifmo.android_2015.search_song.BySongSelectedActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="ru.ifmo.android_2015.search_song.SongSelectedActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="ru.ifmo.android_2015.search_song.AlbumSelectedActivity"
+        <activity android:name="ru.ifmo.android_2015.search_song.SongsOfSingerActivity"
             android:screenOrientation="portrait"/>
         <activity android:name="ru.ifmo.android_2015.search_song.TextSelectedActivity"
             android:screenOrientation="portrait"/>

@@ -4,22 +4,14 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.URLEncoder;
 import java.util.Arrays;
-
-import javax.json.Json;
-import javax.json.JsonReader;
-
-import ru.ifmo.android_2015.search_song.model.ArrayOfSongs;
-import ru.ifmo.android_2015.search_song.model.Tracks;
 
 /**
  * Created by vorona on 01.12.15.
@@ -53,7 +45,8 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         translation = (TextView) activity.findViewById(R.id.scrollTranslation);
         title.setText(R.string.downloading);
         Log.w("TextAsyncTask", "We started Async");
-        ArrayOfSongs.clear();
+        textOfSong = "";
+        translOfSong = "";
     }
 
     public void attachActivity(Activity activity) {
@@ -72,14 +65,17 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             song = params[0];
             group = params[1];
             source = params[2];
-            Log.w("TextAsyncTask", "We went into do..." + params[0]);
+            Log.w("TextAsyncTask", "We went into do..." + group + " " + song);
             state = DownloadState.DOWNLOADING;
 
             if (song.charAt(0) >= 'А' && song.charAt(0) <= 'Я') {
+                Log.w("TextAsyncTask", "Russian group");
                 textOfSong = originalFromMegalyrics(source);
+                Log.w("TextAsyncTask", "Russian group1");
                 trans = false;
                 return null;
             }
+            Log.w("TextAsyncTask", "Group: " + group);
             String[] songs = amalgamaTranslations(group);
 
             Log.w("TextAsyncTask", "We got groups");
@@ -98,7 +94,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
                     }
                 }
             } else {
-                Log.w("TextAsyncTask", "We got empty first song");
+                Log.w("TextAsyncTask", "We got empty first song1");
                 state = DownloadState.NOSONGS;
             }
 
@@ -228,7 +224,6 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
     }
 
     private static String originalFromMegalyrics(String songSource) throws IOException {
-
         Document html = Jsoup.connect(songSource).get();
         String text = html.getElementsByClass("text_inner").html().replace("<br>", "$$$");
         String txt = Jsoup.parse(text).text().replace("$$$", "\n");
