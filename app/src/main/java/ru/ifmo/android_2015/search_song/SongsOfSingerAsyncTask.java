@@ -58,8 +58,8 @@ public class SongsOfSingerAsyncTask extends AsyncTask<Group, Void, Void> {
         }
     }
 
-    public static String getSongInPosition(int position) {
-        return songs[position].title;
+    public static Track getSongInPosition(int position) {
+        return songs[position];
     }
 
     public static int numberOfSongs() {

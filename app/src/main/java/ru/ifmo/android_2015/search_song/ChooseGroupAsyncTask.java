@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import ru.ifmo.android_2015.search_song.list.FirstRecyclerAdapter;
-import ru.ifmo.android_2015.search_song.list.FirstSelectedListener;
+import ru.ifmo.android_2015.search_song.list.GroupSelectedListener;
 import ru.ifmo.android_2015.search_song.list.RecylcerDividersDecorator;
 import ru.ifmo.android_2015.search_song.model.Group;
 
@@ -123,7 +123,7 @@ public class ChooseGroupAsyncTask extends AsyncTask<String, Void, Void> {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
         FirstRecyclerAdapter adapter = new FirstRecyclerAdapter(activity);
-        adapter.setSingerSelectedListener((FirstSelectedListener) activity);
+        adapter.setSingerSelectedListener((GroupSelectedListener) activity);
         recyclerView.setAdapter(adapter);
     }
 

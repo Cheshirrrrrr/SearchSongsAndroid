@@ -19,13 +19,13 @@ public class FirstRecyclerAdapter<T> extends RecyclerView.Adapter<FirstRecyclerA
         implements View.OnClickListener {
 
     private final LayoutInflater layoutInflater;
-    private FirstSelectedListener singerSelectedListener;
+    private GroupSelectedListener singerSelectedListener;
 
     public FirstRecyclerAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setSingerSelectedListener(FirstSelectedListener listener) {
+    public void setSingerSelectedListener(GroupSelectedListener listener) {
         singerSelectedListener = listener;
     }
 

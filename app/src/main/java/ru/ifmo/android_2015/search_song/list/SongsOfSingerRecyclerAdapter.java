@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.R;
 import ru.ifmo.android_2015.search_song.SongsOfSingerAsyncTask;
+import ru.ifmo.android_2015.search_song.model.Track;
 
 /**
  * Created by vorona on 29.11.15.
@@ -37,9 +38,9 @@ public class SongsOfSingerRecyclerAdapter extends RecyclerView.Adapter<SongsOfSi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String song = SongsOfSingerAsyncTask.getSongInPosition(position);
+        Track song = SongsOfSingerAsyncTask.getSongInPosition(position);
         Log.w("SongAsyncTask", "We're trying to bind");
-        holder.nNameView.setText(song);
+        holder.nNameView.setText(song.title);
         holder.itemView.setTag(R.id.tag, song); //TODO
     }
 
@@ -50,7 +51,7 @@ public class SongsOfSingerRecyclerAdapter extends RecyclerView.Adapter<SongsOfSi
 
     @Override
     public void onClick(View v) {
-        String song = (String) v.getTag(R.id.tag);
+        Track song = (Track) v.getTag(R.id.tag);
         if (songSelectedListener != null && song!= null) {
             songSelectedListener.onSongSelected(song);
         }

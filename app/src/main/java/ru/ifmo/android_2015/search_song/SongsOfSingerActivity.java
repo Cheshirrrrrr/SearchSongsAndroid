@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
 import ru.ifmo.android_2015.search_song.model.Group;
+import ru.ifmo.android_2015.search_song.model.Track;
 
 /**
  * Created by vorona on 24.11.15.
@@ -91,12 +92,12 @@ public class SongsOfSingerActivity extends AppCompatActivity implements SongSele
     private static final String TAG = "SongSelected";
 
     @Override
-    public void onSongSelected(String song) {
+    public void onSongSelected(Track song) {
         Log.v(TAG, "onTextClicked: ");
         Intent text = new Intent(this, TextSelectedActivity.class);
-        text.putExtra(TextSelectedActivity.EXTRA_SONG, song);
-        text.putExtra(TextSelectedActivity.EXTRA_SINGER, singer);
-        text.putExtra(TextSelectedActivity.EXTRA_SOURCE, "fuck"); //TODO source
+        text.putExtra(TextSelectedActivity.EXTRA_SONG, song.title);
+        text.putExtra(TextSelectedActivity.EXTRA_SINGER, song.artist);
+        text.putExtra(TextSelectedActivity.EXTRA_SOURCE, song.source); //TODO source
         startActivity(text);
     }
 }

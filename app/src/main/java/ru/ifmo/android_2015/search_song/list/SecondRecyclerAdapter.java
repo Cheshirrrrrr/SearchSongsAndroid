@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import ru.ifmo.android_2015.search_song.BySongAsyncTask;
 import ru.ifmo.android_2015.search_song.R;
+import ru.ifmo.android_2015.search_song.SongsOfSingerActivity;
 import ru.ifmo.android_2015.search_song.model.Track;
 
 /**
@@ -19,13 +20,13 @@ public class SecondRecyclerAdapter extends RecyclerView.Adapter<SecondRecyclerAd
         implements View.OnClickListener {
 
     private final LayoutInflater layoutInflater;
-    private SecondSelectedListener songSelectedListener;
+    private SongSelectedListener songSelectedListener;
 
     public SecondRecyclerAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setSongSelectedListener(SecondSelectedListener listener) {
+    public void setSongSelectedListener(SongSelectedListener listener) {
         songSelectedListener = listener;
     }
 

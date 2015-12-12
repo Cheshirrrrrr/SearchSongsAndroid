@@ -6,13 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import ru.ifmo.android_2015.search_song.list.SecondSelectedListener;
+import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
 import ru.ifmo.android_2015.search_song.model.Track;
 
 /**
  * Created by vorona on 24.11.15.
  */
-public class BySongSelectedActivity extends AppCompatActivity implements SecondSelectedListener {
+public class BySongSelectedActivity extends AppCompatActivity implements SongSelectedListener {
     public static final String EXTRA_SONG = "song";
 
     private String song;

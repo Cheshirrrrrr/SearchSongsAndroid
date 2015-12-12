@@ -6,14 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import ru.ifmo.android_2015.search_song.list.FirstSelectedListener;
-import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
+import ru.ifmo.android_2015.search_song.list.GroupSelectedListener;
 import ru.ifmo.android_2015.search_song.model.Group;
 
 /**
  * Created by vorona on 02.12.15.
  */
-public class ChooseGroupActivity extends AppCompatActivity implements FirstSelectedListener {
+public class ChooseGroupActivity extends AppCompatActivity implements GroupSelectedListener {
 
     public static final String EXTRA_SINGER = "singer";
 

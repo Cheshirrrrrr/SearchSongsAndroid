@@ -18,7 +18,7 @@ import java.net.URLEncoder;
 
 import ru.ifmo.android_2015.search_song.list.RecylcerDividersDecorator;
 import ru.ifmo.android_2015.search_song.list.SecondRecyclerAdapter;
-import ru.ifmo.android_2015.search_song.list.SecondSelectedListener;
+import ru.ifmo.android_2015.search_song.list.SongSelectedListener;
 import ru.ifmo.android_2015.search_song.model.Track;
 
 /**
@@ -121,7 +121,7 @@ public class BySongAsyncTask extends AsyncTask<String, Void, Void> {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
         SecondRecyclerAdapter adapter = new SecondRecyclerAdapter(activity);
-        adapter.setSongSelectedListener((SecondSelectedListener) activity);
+        adapter.setSongSelectedListener((SongSelectedListener) activity);
         recyclerView.setAdapter(adapter);
     }
 
