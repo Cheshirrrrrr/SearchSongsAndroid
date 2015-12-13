@@ -32,7 +32,7 @@ public class SecondRecyclerAdapter extends RecyclerView.Adapter<SecondRecyclerAd
 
     @Override
     public GroupsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item, parent, false);
+        View view = layoutInflater.inflate(R.layout.item2, parent, false);
         view.setOnClickListener(this);
         return new GroupsViewHolder(view);
     }
@@ -41,7 +41,8 @@ public class SecondRecyclerAdapter extends RecyclerView.Adapter<SecondRecyclerAd
     public void onBindViewHolder(GroupsViewHolder holder, int position) {
         Track track = BySongAsyncTask.getTrackInPosition(position);
         Log.w("SingerAsyncTask", "We're trying to bind");
-        holder.SongName.setText(track.artist + " - " + track.title );
+        holder.SongName.setText(track.title);
+        holder.ArtistName.setText(track.artist);
         holder.itemView.setTag(R.id.tag, track); //TODO
     }
 
@@ -59,12 +60,13 @@ public class SecondRecyclerAdapter extends RecyclerView.Adapter<SecondRecyclerAd
     }
 
     static class GroupsViewHolder extends RecyclerView.ViewHolder {
-        TextView SongName;
+        TextView SongName, ArtistName;
 
         public GroupsViewHolder(View itemView) {
             super(itemView);
             Log.w("SingerAsyncTask", "We're trying to create holder" + R.id.txtSongName);
-            SongName = (TextView) itemView.findViewById(R.id.album_name);
+            SongName = (TextView) itemView.findViewById(R.id.txtSongView);
+            ArtistName = (TextView) itemView.findViewById(R.id.txtGroupView);
         }
     }
 }

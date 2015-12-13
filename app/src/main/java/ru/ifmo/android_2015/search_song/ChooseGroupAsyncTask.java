@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -98,6 +99,7 @@ public class ChooseGroupAsyncTask extends AsyncTask<String, Void, Void> {
             return null;
         } catch (Exception e) {
             Log.w("ChooseGroupAsyncTask", "We got exc...");
+            state = DownloadState.NOALBS;
             return null;
         }
     }
@@ -107,7 +109,6 @@ public class ChooseGroupAsyncTask extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void vi) {
 
         title = (TextView) activity.findViewById(R.id.txtWritten);
-
         Log.w("ChooseGroupAsyncTask", "We in Post...");
         if (groups == null || state == DownloadState.NOALBS) {
             title.setText(R.string.no_info);
@@ -117,11 +118,12 @@ public class ChooseGroupAsyncTask extends AsyncTask<String, Void, Void> {
             title.setText(R.string.error);
         } else {
             title.setText("Выберите группу");
+            activity.findViewById(R.id.list0).setVisibility(View.VISIBLE);
         }
         RecyclerView recyclerView;
         recyclerView = (RecyclerView) activity.findViewById(R.id.list0);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
+        recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.TRANSPARENT));
         FirstRecyclerAdapter adapter = new FirstRecyclerAdapter(activity);
         adapter.setSingerSelectedListener((GroupSelectedListener) activity);
         recyclerView.setAdapter(adapter);

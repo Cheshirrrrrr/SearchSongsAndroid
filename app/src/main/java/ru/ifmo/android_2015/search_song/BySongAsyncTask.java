@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -96,6 +97,7 @@ public class BySongAsyncTask extends AsyncTask<String, Void, Void> {
             return null;
         } catch (Exception e) {
             Log.w("BySongAsyncTask", "We got exc...");
+            state = DownloadState.NOSONGS;
             return null;
         }
     }
@@ -114,12 +116,13 @@ public class BySongAsyncTask extends AsyncTask<String, Void, Void> {
         if (state == DownloadState.ERROR) {
             title.setText(R.string.error);
         } else {
-            title.setText("Выберите группу");
+            title.setText("Выберите песню");
+            activity.findViewById(R.id.list2).setVisibility(View.VISIBLE);
         }
         RecyclerView recyclerView;
         recyclerView = (RecyclerView) activity.findViewById(R.id.list2);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
+        recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.TRANSPARENT));
         SecondRecyclerAdapter adapter = new SecondRecyclerAdapter(activity);
         adapter.setSongSelectedListener((SongSelectedListener) activity);
         recyclerView.setAdapter(adapter);

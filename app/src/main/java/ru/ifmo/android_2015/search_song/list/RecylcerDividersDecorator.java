@@ -14,7 +14,7 @@ public class RecylcerDividersDecorator extends RecyclerView.ItemDecoration {
         paint = new Paint();
         paint.setColor(color);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(1);
+        paint.setStrokeWidth(3);
     }
 
     @Override
@@ -27,8 +27,8 @@ public class RecylcerDividersDecorator extends RecyclerView.ItemDecoration {
         int itemCount = adapter == null ? 0 : adapter.getItemCount();
         // Резервируем под разделитель один пиксель в высоту под каждым элементом
         // кроме последнего
-        int bottomInset = position >= 0 && position < itemCount - 1
-                        ? 1
+        int bottomInset = position >= 0 && position < itemCount - 3
+                        ? 3
                         : 0;
         outRect.set(0, 0, 0, bottomInset);
     }
@@ -44,8 +44,8 @@ public class RecylcerDividersDecorator extends RecyclerView.ItemDecoration {
         for (int i = 0; i < recyclerView.getChildCount(); i++) {
             View child = recyclerView.getChildAt(i);
             int position = recyclerView.getChildLayoutPosition(child);
-            if (position >= 0 && position < itemCount - 1) {
-                float y = child.getBottom() + 1;
+            if (position >= 0 && position < itemCount - 3) {
+                float y = child.getBottom() + 3;
                 c.drawLine(0, y, width, y, paint);
             }
         }

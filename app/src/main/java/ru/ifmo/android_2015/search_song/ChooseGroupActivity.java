@@ -17,7 +17,7 @@ public class ChooseGroupActivity extends AppCompatActivity implements GroupSelec
     public static final String EXTRA_SINGER = "singer";
 
     private String singer;
-    private TextView name;
+    private TextView name, search;
 
     private ChooseGroupAsyncTask downloadTask;
 
@@ -28,6 +28,8 @@ public class ChooseGroupActivity extends AppCompatActivity implements GroupSelec
         setContentView(R.layout.activity_choose_singer);
         singer = getIntent().getStringExtra(EXTRA_SINGER);
         name = (TextView) findViewById(R.id.txtWritten);
+        search = (TextView) findViewById(R.id.txtOld);
+        search.setText("Поиск по: "+ singer);
 
         if (singer == null) {
             Log.w(TAG, "object not provided in extra parameter: " + EXTRA_SINGER);

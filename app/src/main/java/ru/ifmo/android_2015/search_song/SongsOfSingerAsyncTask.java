@@ -133,11 +133,12 @@ public class SongsOfSingerAsyncTask extends AsyncTask<Group, Void, Void> {
             title.setText(R.string.error);
         } else {
             title.setText(album_title);
+            activity.findViewById(R.id.list3).setVisibility(View.VISIBLE);
         }
         RecyclerView recyclerView;
         recyclerView = (RecyclerView) activity.findViewById(R.id.list3);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.BLUE));
+        recyclerView.addItemDecoration(new RecylcerDividersDecorator(Color.TRANSPARENT));
         SongsOfSingerRecyclerAdapter adapter = new SongsOfSingerRecyclerAdapter(activity);
         adapter.setSelectedListener((SongSelectedListener) activity);
         recyclerView.setAdapter(adapter);
@@ -192,7 +193,6 @@ public class SongsOfSingerAsyncTask extends AsyncTask<Group, Void, Void> {
 
         Document html = Jsoup.connect(group.id).get();
         Elements songs = html.getElementsByClass("st-title");
-        System.out.println(songs);
         Track[] tracks = new Track[songs.size() - 1];
         int i = -1;
         for (Element song :songs) {

@@ -1,22 +1,23 @@
 package ru.ifmo.android_2015.search_song;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.view.View;
 import java.io.IOException;
 import java.util.List;
+
 
 /**
  * Created by vorona on 24.11.15.
  */
 public class TextSelectedActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener,
-        MediaPlayer.OnCompletionListener {
+        MediaPlayer.OnCompletionListener{
 
     public static final String EXTRA_SONG = "song";
     public static final String EXTRA_SINGER = "singer";
@@ -29,6 +30,7 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
     MediaPlayer mediaPlayer;
     AudioManager am;
 
+    private Button start;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,18 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
         source = getIntent().getStringExtra(EXTRA_SOURCE);
         name = (TextView) findViewById(R.id.txtName);
         TextView textview= (TextView) findViewById(R.id.scrollText);
-        textview.setMovementMethod(new ScrollingMovementMethod());
+        ScrollingMovementMethod my = new ScrollingMovementMethod();
+        textview.setMovementMethod(my);
         textview= (TextView) findViewById(R.id.scrollTranslation);
-        textview.setMovementMethod(new ScrollingMovementMethod());
+        textview.setMovementMethod(my);
+
+
+        start = (Button) findViewById(R.id.btnResume);
+        start.setText("Попробуем проиграть эту песню!");
+
+
         am = (AudioManager) getSystemService(AUDIO_SERVICE);
+
 
         if (song == null) {
             Log.w(TAG, "object not provided in extra parameter: " + EXTRA_SONG);
@@ -79,10 +89,6 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
         super.onRestoreInstanceState(bundle);
     }
 
-
-
-    private static final String TAG = "TextSelected";
-
     public void onStopClick(View view) {
         mediaPlayer.stop();
     }
@@ -95,7 +101,9 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
             mediaPlayer.setDataSource(TextAsyncTask.url1);
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.prepareAsync();
+
         } catch (IOException e) {
+            start.setText("Не удалось :( Очень жаль");
             Log.w("TextAct", "Error");
         }
     }
@@ -104,6 +112,8 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
     public void onPrepared(MediaPlayer mp) {
         Log.w("TextSelectedActivity", "onPrepared");
         mp.start();
+        start.setText("Удалось :)  Слушаем...");
+        findViewById(R.id.btnStop).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -127,5 +137,8 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
             }
         }
     }
+
+    private static final String TAG = "TextSelected";
+
 }
 

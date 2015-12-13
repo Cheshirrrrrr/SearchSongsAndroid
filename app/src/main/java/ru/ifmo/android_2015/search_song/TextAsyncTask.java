@@ -2,7 +2,6 @@ package ru.ifmo.android_2015.search_song;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.renderscript.Element;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +13,9 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Arrays;
 
+import ru.ifmo.android_2015.search_song.model.Group;
+import android.renderscript.Element;
+
 /**
  * Created by vorona on 01.12.15.
  */
@@ -22,15 +24,18 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
     private Activity activity;
     private DownloadState state;
     private TextView title, text, translation;
-    private static String textOfSong  = "";
+    private static String textOfSong = "";
     private static String translOfSong = "", group = "", song = "", source = "";
+    private boolean trans = true;
     public static String url1 = "";
-    private  boolean trans = true;
+
     enum DownloadState {
         DOWNLOADING(R.string.downloading),
         DONE(R.string.done),
         ERROR(R.string.error),
-        NOSONGS(R.string.no_info);
+        NOSONGS(R.string.no_info),
+        NOTRANSL(R.string.no_transl)
+        ;
 
         // ID строкового ресурса для заголовка окна прогресса
         final int titleResId;
@@ -63,85 +68,122 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
+        song = params[0];
+        group = params[1];
+        source = params[2];
+        Log.w("TextAsyncTask", "We went into do..." + group + " " + song);
+        state = DownloadState.DOWNLOADING;
         try {
-            song = params[0];
-            group = params[1];
-            source = params[2];
-            Log.w("TextAsyncTask", "We went into do..." + group + " " + song);
-            state = DownloadState.DOWNLOADING;
             url1 = listen(group, song);
-            Log.w("TextAsyncTask", url1);
-            if (song.charAt(0) >= 'А' && song.charAt(0) <= 'Я') {
-                Log.w("TextAsyncTask", "Russian group");
-                textOfSong = originalFromMegalyrics(source);
-                Log.w("TextAsyncTask", "Russian group1");
-                trans = false;
-                return null;
-            }
-            Log.w("TextAsyncTask", "Group: " + group);
-            String[] songs = amalgamaTranslations(group);
-            Log.w("TextAsyncTask", "We got groups");
-            if (songs != null) {
-                if (songs[0] == null) {
-                    Log.w("TextAsyncTask", "We got empty first song");
-                    state = DownloadState.NOSONGS;
-                } else {
-                    state = DownloadState.DONE;
-                    int flag = onAmalgama(song, songs);
+        } catch (IOException e) {
+            Log.w("TextAsyncTask", "We got exc in do...");
+            return null;
+        }
+        Log.w("TextAsyncTask", url1);
 
-                    if (flag >= 0 && flag < songs.length) {
-                        printInformation(group, song);
-                    }  else {
-                        state  = DownloadState.NOSONGS;
-                    }
-                }
-            } else {
-                Log.w("TextAsyncTask", "We got empty first song1");
-                state = DownloadState.NOSONGS;
-            }
-
-        } catch (Exception e) {
-            Log.w("TextAsyncTask", "We got exc...");
-
+        if (Amalgama(group)) {
+            return null;
+        }
+        else {
+            Megalyrics(group);
+            state = DownloadState.NOTRANSL;
         }
 
+        Log.w("TextAsyncTask", "Group: " + group);
         return null;
     }
 
+    boolean Megalyrics(String str) {
+            Log.w("TextAsyncTask", "Russian group");
+            try {
+                textOfSong = originalFromMegalyrics(source);
+            } catch (Exception e) {
+                Log.w("TextAsyncTask", "We got exc in Megalyrics");
+                return false;
+            }
+            trans = false;
+            return true;
+    }
+
+    boolean Amalgama(String group) {
+        String[] songs;
+        try {
+            songs = amalgamaTranslations(group);
+        } catch (Exception e) {
+            Log.w("TextAsyncTask", "We got exc in Amalgama");
+            return false;
+        }
+        Log.w("TextAsyncTask", "We got groups");
+        if (songs != null) {
+            if (songs[0] == null) {
+                Log.w("TextAsyncTask", "We got empty first song");
+                state = DownloadState.NOSONGS;
+                return false;
+            } else {
+                state = DownloadState.DONE;
+                int flag = onAmalgama(song, songs);
+
+                if (flag >= 0 && flag < songs.length) {
+                    try {
+                        printInformation(group, song);
+                    } catch (IOException e) {
+                        return false;
+                    }
+
+                } else {
+                    state = DownloadState.NOSONGS;
+                    Log.w("TextAsyncTask", "We got exc in amalgama->print");
+                    return false;
+                }
+            }
+
+        } else {
+            Log.w("TextAsyncTask", "We got empty first song1");
+            state = DownloadState.NOSONGS;
+            return false;
+        }
+        return true;
+    }
+
     @Override
-    protected void onPostExecute(Void vi) {
+    protected void onPostExecute(Void voi) {
 
         title = (TextView) activity.findViewById(R.id.txtName);
 
         Log.w("TextAsyncTask", "We in Post...");
-        if ( state == DownloadState.NOSONGS) {
+        if (state == DownloadState.NOSONGS) {
             title.setText(R.string.no_info);
             text.setVisibility(View.INVISIBLE);
             translation.setVisibility(View.INVISIBLE);
             activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
+            return;
         }
-        if(state == DownloadState.ERROR){
+        if (state == DownloadState.ERROR) {
             title.setText(R.string.error);
             text.setVisibility(View.INVISIBLE);
             translation.setVisibility(View.INVISIBLE);
             activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
+            return;
         }
-        if (!trans) {
+        if (!trans || state == DownloadState.NOTRANSL) {
             title.setText(group + " - " + song);
             text.setText("Text");
             if (!textOfSong.equals("")) text.setText(textOfSong);
             translation.setHeight(0);
             translation.setVisibility(View.INVISIBLE);
             activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
-        }
-        else {
+            text.setVisibility(View.VISIBLE);
+
+        } else {
             title.setText(group + " - " + song);
             text.setText("Text");
             if (!textOfSong.equals("")) text.setText(textOfSong);
             translation.setText("Translation");
             if (!translOfSong.equals("")) translation.setText(translOfSong);
+            text.setVisibility(View.VISIBLE);
+            translation.setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.textView3);
         }
-        return;
     }
 
 
@@ -152,7 +194,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         Log.w("TextAsyncTask", "We in amalgamaTransl...");
         try {
             groupName = amalgamaFormat(groupName, IGNORE_THE, "_");
-            Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + URLEncoder.encode(String.valueOf(groupName.charAt(0)), "utf-8") +"/" + URLEncoder.encode(groupName, "utf-8") + "/").get();
+            Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + URLEncoder.encode(String.valueOf(groupName.charAt(0)), "utf-8") + "/" + URLEncoder.encode(groupName, "utf-8") + "/").get();
             Log.w("TextAsyncTask", "We in amalgamaTransl1...");
 
             Object listOfUl[] = html.body().getElementById("songs_nav").select("ul").toArray();
@@ -196,8 +238,8 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
 
     public static int onAmalgama(String trackName, String[] listOfTranslations) {
         Log.w("TextAsyncTask", "We in onAmalgama...");
-        trackName = amalgamaFormat(trackName, NON_IGNORE_THE,"_");
-         return Arrays.binarySearch(listOfTranslations, trackName);
+        trackName = amalgamaFormat(trackName, NON_IGNORE_THE, "_");
+        return Arrays.binarySearch(listOfTranslations, trackName);
     }
 
     public static void printInformation(String artist, String song) throws IOException {
@@ -205,7 +247,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         artist = amalgamaFormat(artist, IGNORE_THE, "_");
         song = amalgamaFormat(song, NON_IGNORE_THE, "_");
 
-        Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + artist.charAt(0) +"/" + artist + "/" + song + ".html").get();
+        Document html = Jsoup.connect("http://www.amalgama-lab.com/songs/" + artist.charAt(0) + "/" + artist + "/" + song + ".html").get();
 
 //        printTextByClass(html, "original");
         Object text[] = html.getElementsByClass("original").toArray();
@@ -217,7 +259,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         text = html.getElementsByClass("translate").toArray();
         String transl = "";
         for (Object aText : text) {
-           transl +=  Jsoup.parse(aText.toString()).text() + "\n";
+            transl += Jsoup.parse(aText.toString()).text() + "\n";
         }
         textOfSong = txt;
         translOfSong = transl;
@@ -230,14 +272,12 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         return txt;
     }
 
-
     public String listen(String artist, String song) throws IOException {
         Log.w("TextAsyncTask", "We in listen");
         String forSearch = (artist + "+" + song).replace(" ", "+");
         Log.w("TextAsyncTask", forSearch);
-        Document html = Jsoup.connect("http://mp3.cc/search/f/" + forSearch).get();
+        Document html = Jsoup.connect("http://mp3.cc/search/f/" + URLEncoder.encode(forSearch, "utf-8")).get();
         String url = html.getElementsByClass("playlist-btn").select("a").get(1).absUrl("href");
         return url;
     }
-
 }

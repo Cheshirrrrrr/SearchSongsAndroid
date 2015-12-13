@@ -16,7 +16,7 @@ public class BySongSelectedActivity extends AppCompatActivity implements SongSel
     public static final String EXTRA_SONG = "song";
 
     private String song;
-    private TextView name;
+    private TextView name, data;
 
     private BySongAsyncTask downloadTask;
 
@@ -27,6 +27,9 @@ public class BySongSelectedActivity extends AppCompatActivity implements SongSel
         setContentView(R.layout.activity_song_selected);
         song = getIntent().getStringExtra(EXTRA_SONG);
         name = (TextView) findViewById(R.id.txtSongName);
+        data = (TextView) findViewById(R.id.txtOldSong);
+        data.setText("Поиск по: "+ song);
+
         if (song == null) {
             Log.w(TAG, "object not provided in extra parameter: " + EXTRA_SONG);
             finish();

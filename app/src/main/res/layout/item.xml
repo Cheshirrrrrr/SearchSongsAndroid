@@ -12,5 +12,6 @@
     android:focusable="true"
     android:clickable="true"
     android:background="@drawable/item"
-    style="@style/CustomTextView" />
+    style="@style/CustomTextView"
+    android:maxHeight="40dp" />
 

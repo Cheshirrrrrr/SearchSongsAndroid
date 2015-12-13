@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="Сохраненные данные"
+        android:id="@+id/txtOld"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        style="@style/CustomTextView"
+        android:textColor="#200b7e"
+        android:textAlignment="textStart"
+        android:gravity="left"
+        android:paddingLeft="10dp"
+        android:textSize="13dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Выбор группы"
         android:id="@+id/txtWritten"
         android:layout_gravity="center_horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:gravity="center"
         style="@style/CustomTextView"
-        android:textColor="#200b7e"/>
+        android:textColor="#200b7e"
+        android:outlineProvider="paddedBounds"
+        android:elevation="10dp" />
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/list0"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="377dp"
         tools:context="project.project.ChooseGroupActivity"
         style="@style/CustomListView"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:layout_weight="1.32"
+        android:visibility="invisible"/>
 
 </LinearLayout>

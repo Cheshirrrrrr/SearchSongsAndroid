@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Searching for you :3 </string>
-    <string name="downloading">Идет загрузка...</string>
+    <string name="downloading">Идет загрузка…</string>
     <string name="done">Готово</string>
     <string name="error">Ошибка</string>
     <string name="no_info">Не найдено по вашему запросу</string>
@@ -12,4 +12,7 @@
     <string name="translation">Перевод</string>
     <string name="loading">Загрузка</string>
     <string name="fuck">Не можем загрузить картинку</string>
+    <string name="no_transl">Не найден перевод</string>
+    <string name="searching">Поиск по: </string>
+
 </resources>

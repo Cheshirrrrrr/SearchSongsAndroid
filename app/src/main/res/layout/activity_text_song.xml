@@ -13,18 +13,19 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:gravity="center"
-        android:textSize="30dp"
+        android:textSize="20dp"
         style="@style/CustomTextView"
         android:textColor="#200b7e"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:maxLength="40" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="99dp"
         android:id="@+id/scrollText"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.20"
+        android:layout_weight="0.83"
         android:scrollbars="vertical"
         android:scrollbarStyle="outsideOverlay"
         android:background="@drawable/bckgr"
@@ -34,7 +35,9 @@
         android:paddingTop="10dp"
         android:paddingRight="20dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:textAlignment="center"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -44,14 +47,15 @@
         android:layout_gravity="center_horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:gravity="center"
         style="@style/CustomTextView"
-        android:textColor="#200b7e"/>
+        android:textColor="#200b7e"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="86dp"
+        android:layout_height="194dp"
         android:id="@+id/scrollTranslation"
         android:background="@drawable/bckgr"
         android:scrollbars="vertical"
@@ -63,8 +67,9 @@
         android:paddingTop="10dp"
         android:paddingRight="20dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
-
+        android:layout_marginRight="10dp"
+        android:textAlignment="center"
+        android:visibility="invisible"/>
     <Button
         style="?android:attr/buttonStyleSmall"
         android:id="@+id/btnResume"
@@ -72,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.26"
         android:onClick="onStartClick"
-        android:text="Resume"
+        android:text=""
         android:textSize="12sp">
     </Button>
 
@@ -83,7 +88,8 @@
         android:layout_weight="1"
         android:onClick="onStopClick"
         android:text="Stop"
-        android:textSize="12sp">
-    </Button>
+        android:textSize="12sp"
+        android:visibility="invisible">
 
+    </Button>
 </LinearLayout>

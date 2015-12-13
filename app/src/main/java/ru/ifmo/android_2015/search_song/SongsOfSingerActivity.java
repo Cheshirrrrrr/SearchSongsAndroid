@@ -35,7 +35,7 @@ public class SongsOfSingerActivity extends AppCompatActivity implements SongSele
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.w(TAG, "I'm here");
-        setContentView(R.layout.activity_album_selected);
+        setContentView(R.layout.activity_singer_selected);
 
         album = getIntent().getStringExtra(EXTRA_ALBUM);
         singer = getIntent().getStringExtra(EXTRA_TITLE);
