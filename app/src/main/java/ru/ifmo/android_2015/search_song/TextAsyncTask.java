@@ -2,6 +2,7 @@ package ru.ifmo.android_2015.search_song;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.renderscript.Element;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
     private TextView title, text, translation;
     private static String textOfSong  = "";
     private static String translOfSong = "", group = "", song = "", source = "";
+    public static String url1 = "";
     private  boolean trans = true;
     enum DownloadState {
         DOWNLOADING(R.string.downloading),
@@ -67,7 +69,8 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             source = params[2];
             Log.w("TextAsyncTask", "We went into do..." + group + " " + song);
             state = DownloadState.DOWNLOADING;
-
+            url1 = listen(group, song);
+            Log.w("TextAsyncTask", url1);
             if (song.charAt(0) >= 'А' && song.charAt(0) <= 'Я') {
                 Log.w("TextAsyncTask", "Russian group");
                 textOfSong = originalFromMegalyrics(source);
@@ -77,7 +80,6 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             }
             Log.w("TextAsyncTask", "Group: " + group);
             String[] songs = amalgamaTranslations(group);
-
             Log.w("TextAsyncTask", "We got groups");
             if (songs != null) {
                 if (songs[0] == null) {
@@ -107,7 +109,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void voi) {
+    protected void onPostExecute(Void vi) {
 
         title = (TextView) activity.findViewById(R.id.txtName);
 
@@ -117,14 +119,12 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             text.setVisibility(View.INVISIBLE);
             translation.setVisibility(View.INVISIBLE);
             activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
-            return;
         }
         if(state == DownloadState.ERROR){
             title.setText(R.string.error);
             text.setVisibility(View.INVISIBLE);
             translation.setVisibility(View.INVISIBLE);
             activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
-            return;
         }
         if (!trans) {
             title.setText(group + " - " + song);
@@ -133,7 +133,6 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             translation.setHeight(0);
             translation.setVisibility(View.INVISIBLE);
             activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
-            return;
         }
         else {
             title.setText(group + " - " + song);
@@ -142,6 +141,7 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
             translation.setText("Translation");
             if (!translOfSong.equals("")) translation.setText(translOfSong);
         }
+        return;
     }
 
 
@@ -230,5 +230,14 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         return txt;
     }
 
+
+    public String listen(String artist, String song) throws IOException {
+        Log.w("TextAsyncTask", "We in listen");
+        String forSearch = (artist + "+" + song).replace(" ", "+");
+        Log.w("TextAsyncTask", forSearch);
+        Document html = Jsoup.connect("http://mp3.cc/search/f/" + forSearch).get();
+        String url = html.getElementsByClass("playlist-btn").select("a").get(1).absUrl("href");
+        return url;
+    }
 
 }
