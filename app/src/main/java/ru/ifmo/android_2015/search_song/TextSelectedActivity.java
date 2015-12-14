@@ -30,13 +30,13 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
     MediaPlayer mediaPlayer;
     AudioManager am;
 
-    private Button start;
+    private Button start, stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.w(TAG, "I'm here");
-        setContentView(R.layout.activity_text_song);
+        setContentView(R.layout.activity_text_song2);
         song = getIntent().getStringExtra(EXTRA_SONG);
         singer = getIntent().getStringExtra(EXTRA_SINGER);
         source = getIntent().getStringExtra(EXTRA_SOURCE);
@@ -46,14 +46,11 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
         textview.setMovementMethod(my);
         textview= (TextView) findViewById(R.id.scrollTranslation);
         textview.setMovementMethod(my);
+        textview= (TextView) findViewById(R.id.scrollText1);
+        textview.setMovementMethod(my);
 
-
-        start = (Button) findViewById(R.id.btnResume);
-        start.setText("Попробуем проиграть эту песню!");
-
-
+        start = (Button) findViewById(R.id.btnResume1);
         am = (AudioManager) getSystemService(AUDIO_SERVICE);
-
 
         if (song == null) {
             Log.w(TAG, "object not provided in extra parameter: " + EXTRA_SONG);
@@ -101,9 +98,11 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
             mediaPlayer.setDataSource(TextAsyncTask.url1);
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.prepareAsync();
+            start.setText("Подгружаем...");
 
         } catch (IOException e) {
-            start.setText("Не удалось :( Очень жаль");
+
+            start.setText("Не удалось :(  Очень жаль...");
             Log.w("TextAct", "Error");
         }
     }
@@ -112,7 +111,12 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
     public void onPrepared(MediaPlayer mp) {
         Log.w("TextSelectedActivity", "onPrepared");
         mp.start();
-        start.setText("Удалось :)  Слушаем...");
+        start.setVisibility(View.INVISIBLE);
+        start = (Button) findViewById(R.id.btnResume2);
+        stop = (Button) findViewById(R.id.btnStop2);
+        start.setVisibility(View.VISIBLE);
+        stop.setVisibility(View.VISIBLE);
+
         findViewById(R.id.btnStop).setVisibility(View.VISIBLE);
     }
 

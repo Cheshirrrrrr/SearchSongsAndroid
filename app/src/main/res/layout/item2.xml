@@ -13,6 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="left|top"
         android:textSize="18dp"
+        style="@style/CustomTextView"
         android:textColor="#ffffff"
         android:maxLength="40"
         android:background="@drawable/new_back"

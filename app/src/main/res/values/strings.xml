@@ -14,5 +14,6 @@
     <string name="fuck">Не можем загрузить картинку</string>
     <string name="no_transl">Не найден перевод</string>
     <string name="searching">Поиск по: </string>
+    <string name="stop_btn">Stop</string>
 
 </resources>

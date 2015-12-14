@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txtName"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        style="@style/CustomTextView"
+        android:textColor="#200b7e"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:maxLength="40" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/image_frame">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="159dp"
+            android:id="@+id/scrollText"
+            android:layout_gravity="center_horizontal"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideOverlay"
+            android:background="@drawable/bckgr"
+            android:textColor="#ffffff"
+            android:textSize="15dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textAlignment="center"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/translation"
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="18dp"
+            android:gravity="center"
+            style="@style/CustomTextView"
+            android:textColor="#200b7e"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollTranslation"
+            android:background="@drawable/bckgr"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideOverlay"
+            android:textSize="15dp"
+            android:textColor="#ffffff"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textAlignment="center"
+            android:visibility="invisible" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollText1"
+            android:layout_gravity="center_horizontal"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideOverlay"
+            android:background="@drawable/bckgr"
+            android:textColor="#ffffff"
+            android:textSize="15dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textAlignment="center"
+            android:visibility="invisible"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btn_frame">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/btnResume2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:onClick="onStartClick"
+            android:text="Еще разок! =)"
+            android:textSize="18sp"
+            android:background="@drawable/item"
+            android:layout_margin="10dp"
+            android:textColor="#ffffff"
+            android:visibility="invisible" >
+        </Button>
+
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/btnStop2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:onClick="onStopClick"
+            android:text="Стоп"
+            android:textSize="18sp"
+            android:background="@drawable/item"
+            android:layout_margin="10dp"
+            android:textColor="#ffffff"
+            android:visibility="invisible" >
+        </Button>
+
+    </LinearLayout>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/btnResume1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:onClick="onStartClick"
+            android:text="Поробуем проиграть Вашу песню!"
+            android:textSize="18sp"
+            android:background="@drawable/item"
+            android:layout_margin="10dp"
+            android:textColor="#ffffff"
+            android:visibility="invisible" >
+        </Button>
+    </FrameLayout>
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -23,7 +24,8 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
     private static final String LOGTAG = "DownloadingText";
     private Activity activity;
     private DownloadState state;
-    private TextView title, text, translation;
+    private TextView title, text, translation, text1;
+    private Button btnStart, btnStop,btnStart1;
     private static String textOfSong = "";
     private static String translOfSong = "", group = "", song = "", source = "";
     private boolean trans = true;
@@ -50,6 +52,11 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         title = (TextView) activity.findViewById(R.id.txtName);
         text = (TextView) activity.findViewById(R.id.scrollText);
         translation = (TextView) activity.findViewById(R.id.scrollTranslation);
+        text1 = (TextView) activity.findViewById(R.id.scrollText1);
+        btnStart = (Button) activity.findViewById(R.id.btnResume2);
+        btnStart1 = (Button) activity.findViewById(R.id.btnResume1);
+        btnStop = (Button) activity.findViewById(R.id.btnStop2);
+
         title.setText(R.string.downloading);
         Log.w("TextAsyncTask", "We started Async");
         textOfSong = "";
@@ -153,36 +160,38 @@ public class TextAsyncTask extends AsyncTask<String, Void, Void> {
         Log.w("TextAsyncTask", "We in Post...");
         if (state == DownloadState.NOSONGS) {
             title.setText(R.string.no_info);
-            text.setVisibility(View.INVISIBLE);
-            translation.setVisibility(View.INVISIBLE);
-            activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
             return;
         }
         if (state == DownloadState.ERROR) {
             title.setText(R.string.error);
-            text.setVisibility(View.INVISIBLE);
-            translation.setVisibility(View.INVISIBLE);
-            activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
             return;
         }
         if (!trans || state == DownloadState.NOTRANSL) {
             title.setText(group + " - " + song);
-            text.setText("Text");
-            if (!textOfSong.equals("")) text.setText(textOfSong);
+            text1.setText("Text");
+            if (!textOfSong.equals("")){
+                text1.setText(textOfSong);
+                text1.setVisibility(View.VISIBLE);
+                btnStart1.setVisibility(View.VISIBLE);
+            } else {
+                title.setText(R.string.no_info);
+            }
             translation.setHeight(0);
-            translation.setVisibility(View.INVISIBLE);
-            activity.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
-            text.setVisibility(View.VISIBLE);
 
         } else {
             title.setText(group + " - " + song);
-            text.setText("Text");
-            if (!textOfSong.equals("")) text.setText(textOfSong);
-            translation.setText("Translation");
-            if (!translOfSong.equals("")) translation.setText(translOfSong);
-            text.setVisibility(View.VISIBLE);
-            translation.setVisibility(View.VISIBLE);
-            activity.findViewById(R.id.textView3);
+
+            if (!textOfSong.equals("") && !translOfSong.equals("")) {
+                text.setText(textOfSong);
+                translation.setText(translOfSong);
+                text.setVisibility(View.VISIBLE);
+                translation.setVisibility(View.VISIBLE);
+                activity.findViewById(R.id.textView3).setVisibility(View.VISIBLE);
+                btnStart1.setVisibility(View.VISIBLE);
+            } else {
+                title.setText(R.string.no_info);
+            }
+            text1.setVisibility(View.INVISIBLE);
         }
     }
 
