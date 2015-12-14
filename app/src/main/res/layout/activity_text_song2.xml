@@ -12,19 +12,17 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="20sp"
         style="@style/CustomTextView"
         android:textColor="#200b7e"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:maxLength="40" />
+        android:maxLines="2" />
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="350dp"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
         android:id="@+id/image_frame">
 
         <LinearLayout
@@ -43,7 +41,7 @@
             android:scrollbarStyle="outsideOverlay"
             android:background="@drawable/bckgr"
             android:textColor="#ffffff"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingRight="20dp"
@@ -60,7 +58,7 @@
             android:layout_gravity="center_horizontal"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:gravity="center"
             style="@style/CustomTextView"
             android:textColor="#200b7e"
@@ -73,7 +71,7 @@
             android:background="@drawable/bckgr"
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textColor="#ffffff"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -93,7 +91,7 @@
             android:scrollbarStyle="outsideOverlay"
             android:background="@drawable/bckgr"
             android:textColor="#ffffff"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingRight="20dp"
@@ -106,9 +104,7 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
         android:id="@+id/btn_frame">
     <LinearLayout
         android:orientation="horizontal"
@@ -124,12 +120,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:onClick="onStartClick"
-            android:text="Еще разок! =)"
+            android:text="@string/again"
             android:textSize="18sp"
             android:background="@drawable/item"
             android:layout_margin="10dp"
             android:textColor="#ffffff"
-            android:visibility="invisible" >
+            android:visibility="invisible"
+            android:elevation="10dp">
         </Button>
 
 
@@ -140,12 +137,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:onClick="onStopClick"
-            android:text="Стоп"
+            android:text="@string/atp"
             android:textSize="18sp"
             android:background="@drawable/item"
             android:layout_margin="10dp"
             android:textColor="#ffffff"
-            android:visibility="invisible" >
+            android:visibility="invisible"
+            android:elevation="10dp">
         </Button>
 
     </LinearLayout>
@@ -155,14 +153,14 @@
             android:id="@+id/btnResume1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:onClick="onStartClick"
-            android:text="Поробуем проиграть Вашу песню!"
+            android:text="@string/lets_try"
             android:textSize="18sp"
             android:background="@drawable/item"
             android:layout_margin="10dp"
             android:textColor="#ffffff"
-            android:visibility="invisible" >
+            android:visibility="invisible"
+            android:elevation="10dp">
         </Button>
     </FrameLayout>
 </LinearLayout>

@@ -12,7 +12,7 @@
         android:id="@+id/txtSongView"
         android:layout_gravity="center_horizontal"
         android:gravity="left|top"
-        android:textSize="18dp"
+        android:textSize="18sp"
         style="@style/CustomTextView"
         android:textColor="#ffffff"
         android:maxLength="40"
@@ -27,7 +27,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/new_back"
         android:textColor="#ffffff"
-        android:textSize="13dp"
+        android:textSize="13sp"
         android:textAlignment="center"
         android:gravity="center|left"
         android:paddingLeft="10dp" />

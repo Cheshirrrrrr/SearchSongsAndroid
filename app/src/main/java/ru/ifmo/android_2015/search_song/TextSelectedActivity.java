@@ -98,7 +98,8 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
             mediaPlayer.setDataSource(TextAsyncTask.url1);
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.prepareAsync();
-            start.setText("Подгружаем...");
+            if (start == findViewById(R.id.btnResume1))
+                start.setText("Подгружаем...");
 
         } catch (IOException e) {
 
@@ -117,7 +118,7 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
         start.setVisibility(View.VISIBLE);
         stop.setVisibility(View.VISIBLE);
 
-        findViewById(R.id.btnStop).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnStop2).setVisibility(View.VISIBLE);
     }
 
     @Override

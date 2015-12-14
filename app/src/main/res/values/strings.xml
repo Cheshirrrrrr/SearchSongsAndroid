@@ -15,5 +15,11 @@
     <string name="no_transl">Не найден перевод</string>
     <string name="searching">Поиск по: </string>
     <string name="stop_btn">Stop</string>
+    <string name="again">Еще разок! =)</string>
+    <string name="atp">Стоп</string>
+    <string name="lets_try">Поробуем проиграть Вашу песню!</string>
+    <string name="title">Title</string>
+    <string name="choosing_group">Выбор исполнителя</string>
+    <string name="album">Альбом</string>
 
 </resources>
