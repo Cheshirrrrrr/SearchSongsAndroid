@@ -2,53 +2,53 @@
 <items version="2" >
 
     <item
-        jar="/Users/sofya/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jar="/Users/vorona/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-c33d9d2af8b378780423f966c2cd3c674da22f5a.jar" />
+        <dex dex="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-8664db02740f84fa3cc627e4f4ec74b3bbbce6a7.jar" />
     </item>
     <item
-        jar="/Users/sofya/.gradle/caches/modules-2/files-2.1/org.glassfish/javax.json/1.0.4/3178f73569fd7a1e5ffc464e680f7a8cc784b85a/javax.json-1.0.4.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3178f73569fd7a1e5ffc464e680f7a8cc784b85a">
-        <dex dex="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/pre-dexed/debug/javax.json-1.0.4-50bf92c39c4a7d699e6fd9b25d611daa964c83dc.jar" />
-    </item>
-    <item
-        jar="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
-        <dex dex="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/pre-dexed/debug/classes-52da0e3a259ded6b9e8289d0d6ef894ecff20c5b.jar" />
-    </item>
-    <item
-        jar="/Users/sofya/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.8.1/1eb6690b0c629d7000c77a72df5e822fb974f521/jsoup-1.8.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1eb6690b0c629d7000c77a72df5e822fb974f521">
-        <dex dex="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/pre-dexed/debug/jsoup-1.8.1-da5ed2b237915aaaa6afdc8151c902f835b212f8.jar" />
-    </item>
-    <item
-        jar="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-5d3b148bfbdd329b45d1c28cbd7ecf4dc691bb5c.jar" />
-    </item>
-    <item
-        jar="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jar="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/pre-dexed/debug/classes-f82e0377ad986e84cd15e32bd9ad2bf65168a0d3.jar" />
+        <dex dex="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/pre-dexed/debug/classes-6e927d85603515dfed789a7a66393763b8ac5065.jar" />
     </item>
     <item
-        jar="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jar="/Users/vorona/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.8.1/1eb6690b0c629d7000c77a72df5e822fb974f521/jsoup-1.8.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1eb6690b0c629d7000c77a72df5e822fb974f521">
+        <dex dex="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/pre-dexed/debug/jsoup-1.8.1-daa28ec0ab52fc94a322a786ce421d5fce687a6b.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
+        <dex dex="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/pre-dexed/debug/classes-7a2a72d4fdebd41c31596cf05a2948a1292ea24f.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/Users/sofya/Documents/Programming/Android/FuckingAndroid/app/build/intermediates/pre-dexed/debug/classes-77d6afad19dc75f32dfa2f56776be0d9971c9aeb.jar" />
+        <dex dex="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/pre-dexed/debug/classes-9943f836003eb60a7b85a41f7ac31a8883ed6cda.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-b76ea09a2d7c8524c7843bc7c2fe285745d799b5.jar" />
+    </item>
+    <item
+        jar="/Users/vorona/.gradle/caches/modules-2/files-2.1/org.glassfish/javax.json/1.0.4/3178f73569fd7a1e5ffc464e680f7a8cc784b85a/javax.json-1.0.4.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3178f73569fd7a1e5ffc464e680f7a8cc784b85a">
+        <dex dex="/Users/vorona/AndroidStudioProjects/SearchSongsAndroid/app/build/intermediates/pre-dexed/debug/javax.json-1.0.4-0af89166f93bdf9af1eb89e224f95c1aaff6f76d.jar" />
     </item>
 
 </items>

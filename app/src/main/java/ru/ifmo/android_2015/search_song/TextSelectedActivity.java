@@ -27,6 +27,7 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
     private TextView name;
     private TextAsyncTask downloadTask;
     private String url;
+    private boolean playing = false;
     MediaPlayer mediaPlayer;
     AudioManager am;
 
@@ -87,24 +88,29 @@ public class TextSelectedActivity extends AppCompatActivity implements MediaPlay
     }
 
     public void onStopClick(View view) {
-        mediaPlayer.stop();
+        if (playing) {
+            mediaPlayer.stop();
+            playing = false;
+        }
     }
 
     public void onStartClick(View view) {
-        try {
-            Log.w("TextAct", "start HTTP");
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setDataSource(TextAsyncTask.url1);
-            mediaPlayer.setOnPreparedListener(this);
-            mediaPlayer.prepareAsync();
-            if (start == findViewById(R.id.btnResume1))
-                start.setText("Подгружаем...");
+        if (!playing) {
+            try {
+                Log.w("TextAct", "start HTTP");
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.setDataSource(TextAsyncTask.url1);
+                mediaPlayer.setOnPreparedListener(this);
+                mediaPlayer.prepareAsync();
+                if (start == findViewById(R.id.btnResume1))
+                    start.setText("Подгружаем...");
+                playing = true;
+            } catch (IOException e) {
 
-        } catch (IOException e) {
-
-            start.setText("Не удалось :(  Очень жаль...");
-            Log.w("TextAct", "Error");
+                start.setText("Не удалось :(  Очень жаль...");
+                Log.w("TextAct", "Error");
+            }
         }
     }
 
